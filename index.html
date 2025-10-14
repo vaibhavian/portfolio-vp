@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaibhav Prasad - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .glass-card:hover {
+            transform: translateY(-5px) scale(1.03);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 25px 5px rgba(167, 139, 250, 0.15);
+        }
+        .section-title {
+            font-size: 2rem;
+        }
+        @media (min-width: 768px) {
+            .section-title {
+                font-size: 2.5rem;
+            }
+        }
+        .nav-link {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .nav-link:hover {
+            color: #c4b5fd;
+            transform: scale(1.1);
+            text-shadow: 0 0 15px rgba(167, 139, 250, 0.5);
+        }
+        .contact-btn {
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .contact-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px 5px rgba(255, 255, 255, 0.1);
+        }
+
+        #slider-container {
+            position: fixed;
+            inset: 0;
+            z-index: 100;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            user-select: none;
+        }
+        #slider-container.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        .slider-panel {
+            position: absolute;
+            inset: 0;
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        .slider-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slider-panel.left { z-index: 10; }
+        .slider-handle {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 4px;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.7);
+            cursor: ew-resize;
+            z-index: 20;
+            transform: translateX(-50%);
+            transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .slider-handle-line {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 50px;
+            height: 50px;
+            border: 2px solid white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: space-evenly;
+            backdrop-filter: blur(5px);
+        }
+        .slider-handle-line::before, .slider-handle-line::after {
+            content: ''; width: 0; height: 0; border-style: solid;
+        }
+        .slider-handle-line::before {
+             border-width: 6px 8px 6px 0; border-color: transparent white transparent transparent;
+        }
+         .slider-handle-line::after {
+             border-width: 6px 0 6px 8px; border-color: transparent transparent transparent white;
+        }
+        .slider-content { transition: opacity 0.6s ease; }
+        .page-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+        .page-content.active {
+            display: block;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="text-white">
+
+    <div class="bg-black/20 backdrop-blur-sm text-center p-2 fixed top-0 w-full z-[101]">
+        <a href="https://sites.google.com/view/vaibhavprasad/home" target="_blank" rel="noopener noreferrer" class="text-sm bg-violet-500/10 hover:bg-violet-500/20 border border-violet-500/30 text-violet-300 font-semibold py-1 px-4 rounded-full transition-colors duration-300">
+            Original Website Framework
+        </a>
+    </div>
+
+    <div id="slider-container" class="pt-10">
+        <div id="image-slider">
+            <div class="slider-panel right">
+                <img src="https://raw.githubusercontent.com/vaibhavian/Portfolio-VAIBHAV/main/Gemini_Generated_Image_zrrz8zrrz8zrrz8z.png" alt="Professional" class="slider-image" style="object-position: 51.5% 34%;">
+                <div id="professional-content" class="slider-content absolute inset-0 p-4 md:p-8 flex flex-col justify-end items-start text-left bg-gradient-to-t from-black/70 to-transparent">
+                    <h2 class="text-2xl md:text-5xl font-bold">PROFESSIONAL</h2>
+                    <p class="mt-2 text-sm md:text-lg text-gray-300 max-w-md">A final-year Mechanical Engineer specializing in aerospace, automation, and innovative product design.</p>
+                </div>
+            </div>
+            <div class="slider-panel left">
+                <img src="https://raw.githubusercontent.com/vaibhavian/Portfolio-VAIBHAV/main/Gemini_Generated_Image_1xgfa31xgfa31xgf.png" alt="Freelancer" class="slider-image" style="object-position: 48.5% 33%;">
+                 <div id="freelancer-content" class="slider-content absolute inset-0 p-4 md:p-8 flex flex-col justify-end items-end text-right bg-gradient-to-t from-black/70 to-transparent">
+                    <h2 class="text-2xl md:text-5xl font-bold">FREELANCER</h2>
+                    <p class="mt-2 text-sm md:text-lg text-gray-300 max-w-md">Driven by creativity and a passion for design, I bring ideas to life with unique and compelling visual solutions.</p>
+                </div>
+            </div>
+            <div class="slider-handle">
+                <div class="slider-handle-line"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PROFESSIONAL PAGE -->
+    <div id="professional-page" class="page-content">
+        <header class="bg-black/30 backdrop-blur-md sticky top-10 z-50">
+            <div class="container mx-auto flex justify-between items-center p-6">
+                <a href="#" id="home-link-prof" class="text-xl md:text-2xl font-bold">Vaibhav Prasad</a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about-prof" class="nav-link">About</a>
+                    <a href="#skills-prof" class="nav-link">Skills</a>
+                    <a href="#projects-prof" class="nav-link">Projects</a>
+                    <a href="#community-prof" class="nav-link">Community</a>
+                    <a href="#contact-prof" class="nav-link">Contact</a>
+                </nav>
+                <div class="md:hidden">
+                    <button id="mobile-menu-button-prof" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+            <div id="mobile-menu-prof" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
+                <a href="#about-prof" class="block text-center py-4 text-white">About</a>
+                <a href="#skills-prof" class="block text-center py-4 text-white">Skills</a>
+                <a href="#projects-prof" class="block text-center py-4 text-white">Projects</a>
+                <a href="#community-prof" class="block text-center py-4 text-white">Community</a>
+                <a href="#contact-prof" class="block text-center py-4 text-white">Contact</a>
+            </div>
+        </header>
+        <main class="container mx-auto px-6 pt-10">
+            <section id="about-prof" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">About Me (Professional)</h2>
+                <div class="glass-card rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
+                    <p class="text-gray-300 leading-relaxed text-center">
+                        Motivated Mechanical Engineering student with strong foundations in CAD design, mechanical systems, sensor technology and data analysis. Eager to apply technical expertise, problem-solving skills, and a continuous learning mindset to contribute to innovative engineering, automation, and global technology projects while growing as a professional in multidisciplinary environments.
+                    </p>
+                </div>
+            </section>
+            <section id="skills-prof" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">Core Skills</h2>
+                <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">CATIA V5</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">SolidWorks</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Python</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">PLC Programming</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">GD&T</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">PLM</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Fusion 360</h3> </div>
+                    <div class="glass-card rounded-lg p-4 md:p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Excel & Advance Excel</h3> </div>
+                </div>
+            </section>
+            <section id="projects-prof" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">Featured Projects</h2>
+                <div class="space-y-12">
+                    <div class="glass-card rounded-2xl p-8 md:flex gap-8 items-center">
+                        <div class="md:w-1/2 mb-6 md:mb-0"> <img src="" alt="VTOL Project" class="rounded-lg w-full aspect-video bg-gray-700/50"> </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-xl md:text-2xl font-bold mb-3">VTOL Aircraft Design</h3>
+                            <p class="text-gray-300">An ongoing project to design and conceptualize a Vertical Take-Off and Landing (VTOL) aircraft for urban air mobility.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8 md:flex flex-row-reverse gap-8 items-center">
+                        <div class="md:w-1/2 mb-6 md:mb-0"> <img src="" alt="Ramjet Project" class="rounded-lg w-full aspect-video bg-gray-700/50"> </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-xl md:text-2xl font-bold mb-3">Ramjet Engine Design</h3>
+                            <p class="text-gray-300">A project from my internship focused on the design of a conceptual ramjet engine for high-speed flight.</p>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-center text-gray-400 mt-12">More projects upcoming soon...</p>
+            </section>
+            <section id="community-prof" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">Community Leadership</h2>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <a href="https://t.me/sppupuneuniversity" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-8 text-center flex flex-col items-center">
+                        <svg class="w-12 h-12 mb-4 text-sky-400" fill="currentColor" viewBox="0 0 24 24"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zM12 20.25a8.25 8.25 0 1 1 0-16.5 8.25 8.25 0 0 1 0 16.5z"/><path d="m17.485 6.47-13.2 5.033c-.76.29-.75.75-.13.94l3.2 1 1 3.2c.19.62.65.63.94.13l5.033-13.2c.29-.76-.32-1.37-1.08-1.08zM12 14.156a2.156 2.156 0 1 0 0-4.312 2.156 2.156 0 0 0 0 4.312z"/></svg>
+                        <h3 class="text-lg md:text-xl font-bold">Admin - SPPU Mechanical</h3>
+                        <p class="text-gray-400 mt-2">Leading a Telegram community of 12.9k+ engineering students.</p>
+                    </a>
+                    <a href="https://discord.gg/wCakybRYNY" target="_blank" rel="noopener noreferrer" class="glass-card rounded-2xl p-8 text-center flex flex-col items-center">
+                        <svg class="w-12 h-12 mb-4 text-indigo-400" fill="currentColor" viewBox="0 0 28 21"><path d="M23.021 1.628C21.31 0.65 19.463 0 17.5 0c-3.13 0-6.042.6-8.583 1.628-2.54 1.028-4.787 2.457-6.53 4.2C5.071 8.718 2.408 13.11 2.408 17.5c0 .38.017.75.042 1.12.025.37.06.72.094.97.036.25.072.43.095.51.023.08.034.1.034.1s.012.01.012.01c.118.42 1.39 3.42 12.316 3.42 10.928 0 12.2-3 12.318-3.42.012-.01.012-.01.012-.01s.011-.03.034-.1c.023-.08.059-.26.095-.51.034-.25.07-.6.094-.97.025-.37.042-.74.042-1.12 0-4.39-2.663-8.782-5.48-11.672-1.744-1.743-3.99-3.172-6.532-4.2zM9.917 14.28c-1.24 0-2.24-1.1-2.24-2.45s1-2.45 2.24-2.45c1.24 0 2.24 1.1 2.24 2.45 0 1.34-1 2.45-2.24 2.45zm8.166 0c-1.24 0-2.24-1.1-2.24-2.45s1-2.45 2.24-2.45c1.24 0 2.24 1.1 2.24 2.45 0 1.34-1 2.45-2.24 2.45z"/></svg>
+                        <h3 class="text-lg md:text-xl font-bold">Improve Insights</h3>
+                        <p class="text-gray-400 mt-2">Founder of a self-improvement & psychology community on Discord.</p>
+                    </a>
+                </div>
+            </section>
+            <section id="contact-prof" class="text-center py-16 md:py-20">
+                 <h2 class="section-title text-center mb-12">Get In Touch</h2>
+                 <div class="max-w-4xl mx-auto grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+                    <a href="mailto:vaibhvajprasad@gmail.com" class="contact-btn bg-red-500/80 hover:bg-red-500 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                        <span class="text-sm md:text-base">Gmail</span>
+                    </a>
+                    <div class="contact-btn bg-indigo-500/80 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg flex flex-col items-center justify-center">
+                        <div class="flex items-center gap-2">
+                           <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 28 21"><path d="M23.021 1.628C21.31 0.65 19.463 0 17.5 0c-3.13 0-6.042.6-8.583 1.628-2.54 1.028-4.787 2.457-6.53 4.2C5.071 8.718 2.408 13.11 2.408 17.5c0 .38.017.75.042 1.12.025.37.06.72.094.97.036.25.072.43.095.51.023.08.034.1.034.1s.012.01.012.01c.118.42 1.39 3.42 12.316 3.42 10.928 0 12.2-3 12.318-3.42.012-.01.012-.01.012-.01s.011-.03.034-.1c.023-.08.059-.26.095-.51.034-.25.07-.6.094-.97.025-.37.042-.74.042-1.12 0-4.39-2.663-8.782-5.48-11.672-1.744-1.743-3.99-3.172-6.532-4.2zM9.917 14.28c-1.24 0-2.24-1.1-2.24-2.45s1-2.45 2.24-2.45c1.24 0 2.24 1.1 2.24 2.45 0 1.34-1 2.45-2.24 2.45zm8.166 0c-1.24 0-2.24-1.1-2.24-2.45s1-2.45 2.24-2.45c1.24 0 2.24 1.1 2.24 2.45 0 1.34-1 2.45-2.24 2.45z"/></svg>
+                            <span class="text-sm md:text-base">Discord</span>
+                        </div>
+                        <span class="text-xs font-normal opacity-75 mt-1">mr.vaibhav.p</span>
+                    </div>
+                    <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" rel="noopener noreferrer" class="contact-btn bg-green-500/80 hover:bg-green-500 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95l-1.46 5.38 5.51-1.44c1.45.84 3.09 1.29 4.8 1.29h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.92-9.91zM18.4 15.25c-.22-.12-1.32-.65-1.52-.73-.21-.08-.36-.12-.52.12-.16.23-.58.73-.71.88-.13.16-.26.17-.48.06-.22-.12-1.02-.38-1.94-1.2-1.11-.97-1.63-1.75-1.87-2.05-.16-.23-.02-.36.11-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.71-.19-.46-.39-.4-.52-.4-.12 0-.28 0-.42 0-.15 0-.39.06-.58.29-.2.23-.75.73-.75 1.79s.77 2.07.88 2.22c.11.16 1.52 2.32 3.68 3.25.5.21.89.34 1.2.43.48.14.91.12 1.26.08.39-.05 1.32-.54 1.5-1.04.19-.5.19-.93.13-1.04-.05-.12-.19-.19-.41-.31z"/></svg>
+                        <span class="text-sm md:text-base">WhatsApp</span>
+                    </a>
+                    <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" rel="noopener noreferrer" class="contact-btn bg-blue-600/80 hover:bg-blue-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2">
+                        <svg class="w-5 h-5 md:w-6 md:h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <span class="text-sm md:text-base">LinkedIn</span>
+                    </a>
+                 </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- FREELANCER PAGE -->
+    <div id="freelancer-page" class="page-content">
+        <header class="bg-black/30 backdrop-blur-md sticky top-10 z-50">
+            <div class="container mx-auto flex justify-between items-center p-6">
+                <a href="#" id="home-link-freelance" class="text-xl md:text-2xl font-bold">Vaibhav Prasad</a>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about-freelance" class="nav-link">About</a>
+                    <a href="#services-freelance" class="nav-link">Services</a>
+                    <a href="#services-list-freelance" class="nav-link">Rates</a>
+                    <a href="#portfolio-freelance" class="nav-link">Project</a>
+                    <a href="#contact-freelance" class="nav-link">Contact</a>
+                </nav>
+                 <div class="md:hidden">
+                    <button id="mobile-menu-button-freelance" class="text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                    </button>
+                </div>
+            </div>
+             <div id="mobile-menu-freelance" class="hidden md:hidden bg-black/80 backdrop-blur-lg">
+                <a href="#about-freelance" class="block text-center py-4 text-white">About</a>
+                <a href="#services-freelance" class="block text-center py-4 text-white">Services</a>
+                <a href="#services-list-freelance" class="block text-center py-4 text-white">Rates</a>
+                <a href="#portfolio-freelance" class="block text-center py-4 text-white">Project</a>
+                <a href="#contact-freelance" class="block text-center py-4 text-white">Contact</a>
+            </div>
+        </header>
+        <main class="container mx-auto px-6 pt-10">
+            <section id="about-freelance" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">About Me (Freelancer)</h2>
+                 <div class="glass-card rounded-2xl p-8 md:p-12 max-w-4xl mx-auto">
+                    <p class="text-gray-300 leading-relaxed text-center">
+                        As a creative designer, I focus on bringing ideas to life. With a strong foundation in engineering and an eye for aesthetics, I create compelling visual solutions for a variety of projects.
+                    </p>
+                </div>
+            </section>
+            <section id="services-freelance" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">Creative Services</h2>
+                <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="glass-card rounded-lg p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Thumbnail Design</h3> </div>
+                    <div class="glass-card rounded-lg p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Logo Design</h3> </div>
+                    <div class="glass-card rounded-lg p-6 text-center"> <h3 class="font-semibold text-base md:text-lg">Short form video editing</h3> </div>
+                </div>
+            </section>
+            <section id="services-list-freelance" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">List of Services</h2>
+                <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="glass-card rounded-2xl p-8">
+                        <h3 class="text-xl md:text-2xl font-bold text-center mb-6">Thumbnail Design</h3>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex justify-between border-b border-white/10 pb-2"><span>1 Day Delivery</span> <span class="font-semibold text-white">₹3000</span></li>
+                            <li class="flex justify-between border-b border-white/10 pb-2"><span>3 Days Delivery</span> <span class="font-semibold text-white">₹1900</span></li>
+                            <li class="flex justify-between"><span>5 Days Delivery</span> <span class="font-semibold text-white">₹1000</span></li>
+                        </ul>
+                    </div>
+                    <div class="glass-card rounded-2xl p-8">
+                        <h3 class="text-xl md:text-2xl font-bold text-center mb-6">Shorts Video Editing</h3>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex justify-between border-b border-white/10 pb-2"><span>1 Day Delivery</span> <span class="font-semibold text-white">₹5000</span></li>
+                            <li class="flex justify-between border-b border-white/10 pb-2"><span>3 Days Delivery</span> <span class="font-semibold text-white">₹2500</span></li>
+                            <li class="flex justify-between"><span>5 Days Delivery</span> <span class="font-semibold text-white">₹1500</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="text-center mt-10">
+                    <p class="text-gray-400">To get started, please reach out and mail your requirements in a Doc format to:</p>
+                    <a href="mailto:freelancervaibhav.work@gmail.com" class="text-violet-300 font-semibold text-lg hover:underline">freelancervaibhav.work@gmail.com</a>
+                </div>
+            </section>
+            <section id="portfolio-freelance" class="py-16 md:py-20">
+                <h2 class="section-title text-center mb-12">Project</h2>
+                <div class="glass-card rounded-lg p-4 max-w-2xl mx-auto">
+                    <iframe src="https://rzp.io/i/UZ4LwVGF" 
+                            style="width: 100%; height: 500px; border: none; border-radius: 0.5rem;"
+                            title="Razorpay Payment Gateway">
+                    </iframe>
+                </div>
+            </section>
+            <section id="contact-freelance" class="text-center py-16 md:py-20">
+                 <h2 class="section-title text-center mb-6">Let's Create Together</h2>
+                 <a href="https://forms.gle/tyLxBVBoyAqqhK3Z9" target="_blank" rel="noopener noreferrer" class="contact-btn bg-violet-500 hover:bg-violet-600 text-white font-bold py-3 px-8 rounded-lg">Connect with me</a>
+            </section>
+        </main>
+    </div>
+
+    <footer class="border-t border-white/10 mt-20">
+        <div class="container mx-auto text-center p-6">
+            <p class="text-gray-400">&copy; 2025 Vaibhav Prasad. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile Menu Toggle
+            const mobileMenuButtons = [document.getElementById('mobile-menu-button-prof'), document.getElementById('mobile-menu-button-freelance')];
+            const mobileMenus = [document.getElementById('mobile-menu-prof'), document.getElementById('mobile-menu-freelance')];
+            mobileMenuButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    mobileMenus[index].classList.toggle('hidden');
+                });
+            });
+
+            // Slider Logic
+            const sliderContainer = document.getElementById('slider-container');
+            const handle = document.querySelector('.slider-handle');
+            const leftPanel = document.querySelector('.slider-panel.left');
+            const leftImage = leftPanel.querySelector('.slider-image');
+            const rightImage = document.querySelector('.slider-panel.right .slider-image');
+            const profPage = document.getElementById('professional-page');
+            const freelancePage = document.getElementById('freelancer-page');
+            const homeLinks = [document.getElementById('home-link-prof'), document.getElementById('home-link-freelance')];
+
+            let isDragging = false, didMove = false;
+
+            function setInteractionStyles(percent) {
+                leftPanel.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+                handle.style.left = `${percent}%`;
+                const freelancerOpacity = Math.max(0, (percent - 40) / 30);
+                const professionalOpacity = Math.max(0, (60 - percent) / 30);
+                document.getElementById('professional-content').style.opacity = professionalOpacity;
+                document.getElementById('freelancer-content').style.opacity = freelancerOpacity;
+                const freelancerScale = 1 + ((100 - percent) / 100) * 0.1;
+                const freelancerTranslate = ((100 - percent) / 100) * 5;
+                leftImage.style.transform = `scale(${freelancerScale}) translateX(${freelancerTranslate}%)`;
+                const professionalScale = 1 + (percent / 100) * 0.1;
+                const professionalTranslate = (percent / 100) * -5;
+                rightImage.style.transform = `scale(${professionalScale}) translateX(${professionalTranslate}%)`;
+            }
+
+            function showPage(pageId) {
+                sliderContainer.classList.add('hidden');
+                if (pageId === 'professional') {
+                    profPage.classList.add('active');
+                    freelancePage.classList.remove('active');
+                } else {
+                    freelancePage.classList.add('active');
+                    profPage.classList.remove('active');
+                }
+            }
+            
+            function showSlider() {
+                sliderContainer.classList.remove('hidden');
+                profPage.classList.remove('active');
+                freelancePage.classList.remove('active');
+                setInteractionStyles(50);
+            }
+
+            const startDragging = (e) => {
+                e.preventDefault();
+                isDragging = true;
+                didMove = false;
+                handle.style.transition = 'none';
+                leftImage.style.transition = 'none';
+                rightImage.style.transition = 'none';
+            };
+
+            const onDrag = (e) => {
+                if (!isDragging) return;
+                didMove = true;
+                requestAnimationFrame(() => {
+                    const rect = sliderContainer.getBoundingClientRect();
+                    const currentX = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+                    let newWidthPercent = (currentX / rect.width) * 100;
+                    if (newWidthPercent < 0) newWidthPercent = 0;
+                    if (newWidthPercent > 100) newWidthPercent = 100;
+                    setInteractionStyles(newWidthPercent);
+                });
+            };
+
+            const stopDragging = () => {
+                if (!isDragging) return;
+                isDragging = false;
+                handle.style.transition = 'left 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                leftImage.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                rightImage.style.transition = 'transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                if (didMove) {
+                    const finalPercent = parseFloat(handle.style.left);
+                    if (finalPercent < 20) {
+                        setTimeout(() => showPage('professional'), 200);
+                    } else if (finalPercent > 80) {
+                        setTimeout(() => showPage('freelancer'), 200);
+                    } else {
+                        setInteractionStyles(50);
+                    }
+                }
+            };
+
+            sliderContainer.addEventListener('click', (e) => {
+                if (didMove || e.target === handle || handle.contains(e.target)) return;
+                const rect = sliderContainer.getBoundingClientRect();
+                const clickPercent = ((e.clientX - rect.left) / rect.width) * 100;
+                if (clickPercent < 50) {
+                    setInteractionStyles(0);
+                    setTimeout(() => showPage('professional'), 800);
+                } else {
+                    setInteractionStyles(100);
+                    setTimeout(() => showPage('freelancer'), 800);
+                }
+            });
+
+            handle.addEventListener('mousedown', startDragging);
+            document.addEventListener('mousemove', onDrag);
+            document.addEventListener('mouseup', stopDragging);
+            handle.addEventListener('touchstart', startDragging, { passive: false });
+            document.addEventListener('touchmove', onDrag, { passive: false });
+            document.addEventListener('touchend', stopDragging);
+
+            homeLinks.forEach(link => link.addEventListener('click', (e) => {
+                e.preventDefault();
+                showSlider();
+            }));
+            
+            setInteractionStyles(50);
+        });
+    </script>
+
+</body>
+</html>
