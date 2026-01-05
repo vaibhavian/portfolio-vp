@@ -56,7 +56,7 @@
                          0 0 40px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- Intensified Box Backglow with SMOOTH CORNERS --- */
+        /* --- intensified Box Backglow with SMOOTH CORNERS --- */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -76,7 +76,7 @@
             z-index: 30;
         }
 
-        /* --- Aura Bubbles --- */
+        /* --- Editing Aura Bubbles --- */
         .aura-bubble {
             position: absolute;
             width: 115px;
@@ -107,6 +107,46 @@
         .b4 { top: 40%; right: -110px; }
         .b5 { bottom: -60px; left: 15%; }
         .b6 { bottom: -70px; right: -10px; }
+
+        /* --- Popup Styling --- */
+        .pop-container { position: relative; }
+        .details-popup {
+            position: absolute;
+            bottom: 112%;
+            left: 50%;
+            transform: translateX(-50%) translateY(15px);
+            width: 300px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 100;
+            background: rgba(10, 10, 20, 0.98);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 60px rgba(255, 255, 255, 0.25);
+            padding: 1.5rem;
+        }
+        .pop-container:hover .details-popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+
+        .requirements-popup {
+            position: absolute;
+            bottom: 115%;
+            left: 50%;
+            transform: translateX(-50%) translateY(15px);
+            width: 350px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 60;
+            background: rgba(10, 10, 15, 0.98);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 1.5rem;
+            box-shadow: 0 0 70px rgba(255, 255, 255, 0.2);
+            padding: 1.75rem;
+        }
+        .requirements-container:hover .requirements-popup { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
 
         .contact-btn {
             border-radius: 1.5rem;
@@ -145,6 +185,17 @@
         #slider-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .slider-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); }
         .slider-handle { position: absolute; top: 0; left: 50%; width: 4px; height: 100%; background: rgba(255, 255, 255, 0.7); z-index: 20; transform: translateX(-50%); transition: left 0.8s; }
+
+        /* Icon Styles */
+        .software-icon {
+            width: 56px; height: 56px; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.2));
+        }
+        .skill-icon {
+            width: 42px; height: 42px; margin-bottom: 1rem; color: white; transition: transform 0.4s ease;
+        }
+        .service-img-placeholder {
+            width: 100%; height: 180px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.3); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700;
+        }
     </style>
 </head>
 <body class="text-white">
@@ -208,14 +259,15 @@
                             <h3 class="text-2xl font-bold text-white">Freelancer @ Digital Chitrakaar</h3>
                             <p class="text-gray-400">Apr 2025 - Present • 10 mos</p>
                         </div>
-                        <p class="text-gray-300 mb-6 italic">Self-employed | Pune, Maharashtra (Hybrid)</p>
+                        <p class="text-gray-300 mb-6 italic font-semibold">Self-employed | Pune, Maharashtra (Hybrid)</p>
                         <p class="text-gray-300 mb-6 leading-relaxed">
-                            Focused on Thumbnail Design, SEO, Logo Design, Website UI, and Content Creation. Applying Attention Psychology to optimize click-through rates and business analysis for visual growth.
+                            Thumbnail Design, SEO, Logo Design, Website Design interface, Content Creation, Marketing, Business Analysis, Attention Psychology, Portfolio Creation.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="badge">Adobe Photoshop</span>
                             <span class="badge">Wondershare Filmora</span>
-                            <span class="badge">Attention Psychology</span>
+                            <span class="badge">SEO & Marketing</span>
+                            <span class="badge">+3 skills</span>
                         </div>
                     </div>
 
@@ -224,13 +276,14 @@
                             <h3 class="text-2xl font-bold text-white">Aircraft Design and Research Intern</h3>
                             <p class="text-gray-400">Jan 2025 - Jan 2025 • 1 mo</p>
                         </div>
-                        <p class="text-gray-300 mb-6 italic">Dwello Aerospace | Internship (Remote)</p>
+                        <p class="text-gray-300 mb-6 italic font-semibold">Dwello Aerospace | Internship (Remote)</p>
                         <p class="text-gray-300 mb-6 leading-relaxed">
-                            Researching aerodynamics and aerospace frameworks. LinkedIn helped me secure this role, where I leveraged Autodesk Fusion 360 for technical research.
+                            Secured via LinkedIn. Focusing on Aerodynamics research and Autodesk Fusion 360 modeling for high-end aerospace frameworks.
                         </p>
                         <div class="flex flex-wrap gap-2">
                             <span class="badge">Aerodynamics</span>
-                            <span class="badge">Fusion 360</span>
+                            <span class="badge">Autodesk Fusion 360</span>
+                            <span class="badge">+4 skills</span>
                         </div>
                     </div>
                 </div>
@@ -238,25 +291,24 @@
 
             <!-- PROJECTS SECTION -->
             <section id="projects-prof" class="py-16 md:py-20 border-t border-white/5">
-                <h2 class="section-title mb-12 italic">Key Projects</h2>
+                <h2 class="section-title mb-12 italic">Projects</h2>
                 <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 text-left">
-                    <!-- Portfolio Website -->
+                    <!-- Front-End Project -->
                     <div class="glass-card p-8 flex flex-col h-full border-violet-500/20">
-                        <h3 class="text-xl font-bold text-violet-300 mb-2">Personal Portfolio Website</h3>
-                        <p class="text-gray-400 text-sm mb-4">Front-End Development Journey</p>
+                        <h3 class="text-xl font-bold text-violet-300 mb-2">Personal Portfolio Development</h3>
                         <p class="text-gray-300 text-sm mb-6 leading-relaxed">
-                            A high-performance portfolio website built using modern front-end technologies. Upskilled during the 1st and 2nd year of engineering to master layout design, Three.js integration, and responsive frameworks.
+                            Building a high-end portfolio using front-end development. Upskilled significantly during the 1st and 2nd year of engineering to master layout, interaction design, and logic implementation.
                         </p>
                         <div class="mt-auto">
-                            <span class="badge">Front-End Dev</span>
-                            <span class="badge">Responsive UI</span>
+                            <span class="badge">Front-End</span>
+                            <span class="badge">Self-Portfolio</span>
                         </div>
                     </div>
                     <!-- Gear Reduction -->
                     <div class="glass-card p-8 flex flex-col h-full">
-                        <h3 class="text-xl font-bold text-white mb-2">2 Stage Gear Reduction</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">DYPCOE | Mar 2025 - May 2025</p>
-                        <p class="text-gray-300 text-sm leading-relaxed">Modeling and assembly of mechanical systems using SOLIDWORKS focusing on CAD precision and mechanical efficiency.</p>
+                        <h3 class="text-xl font-bold text-white mb-2">2 Stage Gear Reduction - SolidWorks</h3>
+                        <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025</p>
+                        <p class="text-gray-300 text-sm leading-relaxed">Associated with D. Y. Patil College of Engineering (DYPCOE). CAD design and precision assembly modeling of a functional gear reduction system.</p>
                         <div class="mt-auto">
                             <span class="badge">SOLIDWORKS</span>
                             <span class="badge">CAD</span>
@@ -264,9 +316,9 @@
                     </div>
                     <!-- Transmission Box -->
                     <div class="glass-card p-8 flex flex-col h-full">
-                        <h3 class="text-xl font-bold text-white mb-2">5 Stage Transmission Gear Box</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">DYPCOE | Mar 2025 - May 2025</p>
-                        <p class="text-gray-300 text-sm leading-relaxed">Advanced surface modeling and complex assembly in CATIA V5 for a multi-stage transmission system.</p>
+                        <h3 class="text-xl font-bold text-white mb-2">5 Stage Transmission Gear Box - CATIA V5</h3>
+                        <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025</p>
+                        <p class="text-gray-300 text-sm leading-relaxed">Associated with DYPCOE. Advanced multi-stage gear box design with complex geometric tolerances and surface modeling.</p>
                         <div class="mt-auto">
                             <span class="badge">CATIA V5</span>
                         </div>
@@ -275,7 +327,7 @@
                     <div class="glass-card p-8 flex flex-col h-full">
                         <h3 class="text-xl font-bold text-white mb-2">Design of Ramjet Engine</h3>
                         <p class="text-gray-400 text-sm mb-4 italic">Dwello Aerospace | Jan 2025</p>
-                        <p class="text-gray-300 text-sm leading-relaxed">Integration of aerodynamics and heat transfer principles for a conceptual ramjet engine model in Fusion 360.</p>
+                        <p class="text-gray-300 text-sm leading-relaxed">Aerodynamic casing design and thermal flow research for a conceptual ramjet propulsion unit.</p>
                         <div class="mt-auto">
                             <span class="badge">Fusion 360</span>
                             <span class="badge">Aerodynamics</span>
@@ -284,42 +336,40 @@
                 </div>
             </section>
 
-            <!-- COMMUNITY & IMPACT SECTION (Requested Bottom Most) -->
+            <!-- COMMUNITY & IMPACT SECTION -->
             <section id="community-impact" class="py-16 md:py-20 border-t border-white/5">
                 <h2 class="section-title mb-12 italic text-white">Community & Leadership</h2>
                 <div class="max-w-5xl mx-auto space-y-8">
-                    <!-- Telegram Section -->
-                    <div class="glass-card p-8 md:p-10 text-left border-sky-500/20">
+                    <!-- Telegram -->
+                    <div class="glass-card p-8 md:p-10 text-left">
                         <div class="flex flex-col md:flex-row md:justify-between items-start mb-6">
                             <div>
                                 <h3 class="text-2xl font-bold text-sky-400">Admin | SPPU Mechanical (13K+)</h3>
-                                <p class="text-gray-400 italic">Telegram Messenger | Sep 2023 - Dec 2025</p>
+                                <p class="text-gray-400 italic">Sep 2023 - Dec 2025 • 2 yrs 4 mos</p>
                             </div>
-                            <span class="badge bg-sky-500/10 text-sky-400 border-sky-400/30">Education</span>
+                            <span class="badge bg-sky-500/10 text-sky-400">Education</span>
                         </div>
                         <p class="text-gray-300 mb-6 leading-relaxed">
-                            Providing academic support and building a massive digital resource repository for engineering students. Guided more than 100+ students to successfully clear backlogs through tailored support and resource sharing.
+                            Provide academic support to engineering students. Personally guided more than 100+ students to successfully clear backlogs through tailored resources and strategic guidance.
                         </p>
                         <p class="text-sky-300/60 font-bold tracking-widest text-xs">🔩 SPPU MECHANICAL ENGINEERING ⚙</p>
                     </div>
 
-                    <!-- Discord Section -->
-                    <div class="glass-card p-8 md:p-10 text-left border-indigo-500/20">
+                    <!-- Discord -->
+                    <div class="glass-card p-8 md:p-10 text-left">
                         <div class="flex flex-col md:flex-row md:justify-between items-start mb-6">
                             <div>
                                 <h3 class="text-2xl font-bold text-indigo-400">Server Owner | Improve Insights</h3>
-                                <p class="text-gray-400 italic">Discord | Dec 2023 - Present</p>
+                                <p class="text-gray-400 italic">Dec 2023 - Present • 2 yrs 2 mos</p>
                             </div>
-                            <span class="badge bg-indigo-500/10 text-indigo-400 border-indigo-400/30">Education</span>
+                            <span class="badge bg-indigo-500/10 text-indigo-400">Education</span>
                         </div>
                         <p class="text-gray-300 mb-6 italic leading-relaxed">
-                            "When you work on a job, you create a living. But when you work on yourself, you create a living as well as a fortune!"
+                            A community of People who believe in self improvement - when you work on a job, you create a living, but when you work on yourself, you create a living as well as fortune!
                         </p>
-                        <div class="p-6 bg-black/40 rounded-xl border border-white/5 mb-6">
-                            <h4 class="text-white font-bold mb-3 uppercase tracking-tighter">🚀 Welcome to the GRIND ZONE 💼💪</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed">
-                                No shortcuts. Real hustle. Growth mindset. Build multiple income streams and stay consistent. Action-takers only—no fluff, no BS, just progress through actionable insights and motivation.
-                            </p>
+                        <div class="p-6 bg-black/40 rounded-xl border border-white/5">
+                            <h4 class="text-white font-bold mb-3">🚀 Welcome to the GRIND ZONE 💼💪</h4>
+                            <p class="text-sm text-gray-400 leading-relaxed">No shortcuts. Just real hustle, growth mindset, and relentless self-improvement. Building multiple income streams and staying consistent. Action-takers only.</p>
                         </div>
                     </div>
 
@@ -327,39 +377,39 @@
                     <div class="glass-card p-8 text-left">
                         <div class="flex justify-between items-center">
                             <h3 class="text-xl font-bold">Project Executive @ EDC DYPCOE</h3>
-                            <p class="text-gray-400 text-sm">Jun 2023 - Jan 2024</p>
+                            <p class="text-gray-400 text-sm">Jun 2023 - Jan 2024 • 8 mos</p>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Contact Grid (Synced Footer) -->
+            <!-- Get In Touch Grid -->
             <section id="contact-footer" class="py-16 md:py-32 border-t border-white/5">
                  <h2 class="section-title mb-12">Get In Touch</h2>
                  <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
                     <a href="mailto:vaibhvajprasad@gmail.com" class="contact-btn bg-red-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">Gmail</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">Gmail</span>
                     </a>
                     <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.617l-5.21-6.817-6.022 6.817h-3.308l7.732-8.835-8.31-10.67h6.772l4.643 6.257 5.49-6.257z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">X (Twitter)</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">X (Twitter)</span>
                     </a>
                     <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" class="contact-btn bg-green-600/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">WhatsApp</span>
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95l-1.46 5.38 5.51-1.44c1.45.84 3.09 1.29 4.8 1.29h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.92-9.91zM18.4 15.25c-.22-.12-1.32-.65-1.52-.73-.21-.08-.36-.12-.52.12-.16.23-.58.73-.71.88-.13.16-.26.17-.48.06-.22-.12-1.02-.38-1.94-1.2-1.11-.97-1.63-1.75-1.87-2.05-.16-.23-.02-.36.11-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.71-.19-.46-.39-.4-.52-.4-.12 0-.28 0-.42 0-.15 0-.39.06-.58.29-.2.23-.75.73-.75 1.79s.77 2.07.88 2.22c.11.16 1.52 2.32 3.68 3.25.5.21.89.34 1.2.43.48.14.91.12 1.26.08.39-.05 1.32-.54 1.5-1.04.19-.5.19-.93.13-1.04-.05-.12-.19-.19-.41-.31z"/></svg>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">WhatsApp</span>
                     </a>
                     <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">LinkedIn</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">LinkedIn</span>
                     </a>
                     <div class="contact-btn bg-indigo-500/80 p-5 text-center">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.076-0.02-0.154-0.031-0.232-0.044-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-0.037 0.01-0.055 0.016-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.04 0.062 0.083 0.122 0.129 0.18 0.81 1.03 1.78 1.91 2.86 2.65 0.02 0.014 0.04 0.027 0.06 0.04 0.35 0.21 0.71 0.41 1.08 0.59 0.02 0.01 0.04 0.018 0.06 0.027 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.03 0.004 0.06 0.008 0.09 0.012 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.03-0.004 0.06-0.008 0.09-0.012 0.61-0.09 1.21-0.22 1.8-0.38 0.02-0.009 0.04-0.017 0.06-0.027 0.37-0.18 0.73-0.38 1.08-0.59 0.02-0.013 0.04-0.026 0.06-0.04 1.08-0.74 2.05-1.62 2.86-2.65 0.046-0.058 0.089-0.118 0.129-0.18 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.01-0.092-0.02-0.184-0.038-0.274-0.013-0.066-0.029-0.132-0.049-0.198-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">Discord</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-center">Discord <br><small class="opacity-70 font-normal">mr.vaibhav.p</small></span>
                     </div>
                     <a href="https://t.me/vaibhavian" target="_blank" class="contact-btn bg-sky-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">Telegram</span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-center">Telegram</span>
                     </a>
                  </div>
             </section>
@@ -368,8 +418,7 @@
 
     <!-- FREELANCER PAGE -->
     <div id="freelancer-page" class="page-content">
-        <!-- (Header and rest of Freelancer content remain exactly as in provided version) -->
-         <header class="bg-black/30 backdrop-blur-md sticky top-0 z-50">
+        <header class="bg-black/30 backdrop-blur-md sticky top-0 z-50">
             <div class="container mx-auto flex justify-between items-center p-6">
                 <a href="#" class="text-xl md:text-2xl font-bold home-link">Vaibhav Prasad</a>
                 <nav class="hidden md:flex space-x-8">
@@ -381,8 +430,10 @@
                 </nav>
             </div>
         </header>
+
         <main class="container mx-auto px-6 pt-10 text-center">
-             <section id="about-freelance" class="py-16 md:py-32 overflow-visible">
+            <!-- Quote with Aura bubbles -->
+            <section id="about-freelance" class="py-16 md:py-32 overflow-visible">
                 <div class="max-w-4xl mx-auto quote-container relative">
                     <div class="aura-bubble b1">Psychology</div>
                     <div class="aura-bubble b2">Feeling the Situation</div>
@@ -398,7 +449,110 @@
                 </div>
             </section>
 
-             <section id="contact-footer-freelance" class="py-16 md:py-40 border-t border-white/5 overflow-visible">
+            <!-- Video Editing Showcase -->
+            <section id="video-edits-freelance" class="py-16 md:py-20 border-t border-white/5">
+                <h2 class="section-title mb-12">Video Editing Showcase</h2>
+                <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+                    <!-- AE -->
+                    <div class="glass-card p-8 flex flex-col items-center">
+                        <svg class="software-icon" viewBox="0 0 128 128" fill="none"><rect width="128" height="128" rx="24" fill="#00005B"/><text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#9999FF" font-family="Arial" font-weight="900" font-size="64">Ae</text></svg>
+                        <h3 class="font-bold text-violet-300 italic text-xl mb-4">Advanced Motion VFX</h3>
+                        <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Visual Edit Preview</div>
+                    </div>
+                    <!-- PR -->
+                    <div class="glass-card p-8 flex flex-col items-center">
+                        <svg class="software-icon" viewBox="0 0 128 128" fill="none"><rect width="128" height="128" rx="24" fill="#00005B"/><text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#9999FF" font-family="Arial" font-weight="900" font-size="64">Pr</text></svg>
+                        <h3 class="font-bold text-violet-300 italic text-xl mb-4">Pro Storytelling</h3>
+                        <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Narrative Edit Preview</div>
+                    </div>
+                    <!-- Filmora -->
+                    <div class="glass-card p-8 flex flex-col items-center">
+                        <svg class="software-icon" viewBox="0 0 128 128" fill="none"><rect width="128" height="128" rx="24" fill="#00C4CC"/><path d="M44 84V44L84 64L44 84Z" fill="white"/></svg>
+                        <h3 class="font-bold text-violet-300 italic text-xl mb-4">Dynamic Shorts</h3>
+                        <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Shorts Flow Preview</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Thumbnail Portfolio -->
+            <section id="thumbnail-portfolio-freelance" class="py-16 md:py-20 border-t border-white/5">
+                <h2 class="section-title mb-12">Thumbnail Portfolio</h2>
+                <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 text-left">
+                    <div class="glass-card p-6 flex flex-col gap-6">
+                        <div class="w-full aspect-video bg-gray-800 rounded-lg flex items-center justify-center border border-white/5"><span class="text-gray-500">Design 1</span></div>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-violet-300 italic underline decoration-violet-500/30">Compositional Analysis</h3>
+                            <p class="text-sm text-gray-400">Hierarchy and saturation balance using Photoshop and Illustrator.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 flex flex-col gap-6">
+                        <div class="w-full aspect-video bg-gray-800 rounded-lg flex items-center justify-center border border-white/5"><span class="text-gray-500">Design 2</span></div>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-violet-300 italic underline decoration-violet-500/30">Brand Identity Focus</h3>
+                            <p class="text-sm text-gray-400">Consistent palettes and font families using Canva and Illustrator.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card p-6 flex flex-col gap-6">
+                        <div class="w-full aspect-video bg-gray-800 rounded-lg flex items-center justify-center border border-white/5"><span class="text-gray-500">Design 3</span></div>
+                        <div class="space-y-4">
+                            <h3 class="text-xl font-bold text-violet-300 italic underline decoration-violet-500/30">AI-Enhanced Creative</h3>
+                            <p class="text-sm text-gray-400">AI subject generation via Gemini (Nano Banana), finalized in Photoshop.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rates with Technical Popups -->
+            <section id="services-list-freelance" class="py-16 md:py-32 border-t border-white/5">
+                <h2 class="section-title mb-16 text-white italic">Service Rates & Specs</h2>
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <!-- Thumbnails -->
+                    <div class="pop-container">
+                        <div class="details-popup">
+                            <h4 class="text-violet-300 font-bold mb-2">Thumbnails</h4>
+                            <p class="text-[11px] text-gray-300 leading-relaxed">
+                                1920x1080 | 300 PPI | High Contrast Color Grade | PSD/PNG | Optimized for Click Psychology.
+                            </p>
+                        </div>
+                        <div class="glass-card p-8 min-h-[500px] flex flex-col items-center">
+                            <div class="service-img-placeholder">Thumbnails Area</div>
+                            <h3 class="text-xl font-bold mb-4 text-violet-300">Thumbnail Design</h3>
+                            <p class="font-bold text-2xl text-white">₹1k - ₹3k</p>
+                        </div>
+                    </div>
+                    <!-- Shorts -->
+                    <div class="pop-container">
+                        <div class="details-popup">
+                            <h4 class="text-violet-300 font-bold mb-2">Shorts/Reels</h4>
+                            <p class="text-[11px] text-gray-300 leading-relaxed">
+                                Max 60s | 9:16 Vertical | Smooth 60 FPS Export | Dynamic Captions | Impactful SFX & Pacing.
+                            </p>
+                        </div>
+                        <div class="glass-card p-8 min-h-[500px] flex flex-col items-center">
+                            <div class="service-img-placeholder">Shorts Area</div>
+                            <h3 class="text-xl font-bold mb-4 text-violet-300">Shorts Editing</h3>
+                            <p class="font-bold text-2xl text-white">₹1.5k - ₹5k</p>
+                        </div>
+                    </div>
+                    <!-- Long Form -->
+                    <div class="pop-container">
+                        <div class="details-popup">
+                            <h4 class="text-violet-300 font-bold mb-2">Long Form</h4>
+                            <p class="text-[11px] text-gray-300 leading-relaxed">
+                                8-20+ Mins | 4K/1080p | Narrative Color Grading | 2 Revisions | Source Media Management.
+                            </p>
+                        </div>
+                        <div class="glass-card p-8 min-h-[500px] flex flex-col justify-center items-center">
+                            <div class="service-img-placeholder">Long Form Area</div>
+                            <h3 class="text-xl font-bold mb-4 text-violet-300">Long Form Video</h3>
+                            <p class="font-bold text-2xl text-white">₹2k - ₹10k</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Final Section with Checklist Popup & Synced Footer -->
+            <section id="contact-footer-freelance" class="py-16 md:py-40 border-t border-white/5 overflow-visible text-center">
                 <div class="max-w-2xl mx-auto requirements-container relative mb-24">
                     <div class="requirements-popup glass-card text-left p-8">
                         <h4 class="text-violet-300 font-bold mb-4 border-b border-white/10 pb-2 italic text-lg text-center">Project Checklist</h4>
@@ -428,7 +582,7 @@
                         <span class="text-[10px] font-bold uppercase tracking-widest">X (Twitter)</span>
                     </a>
                     <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" class="contact-btn bg-green-600/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
                         <span class="text-[10px] font-bold uppercase tracking-widest">WhatsApp</span>
                     </a>
                     <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5">
@@ -437,7 +591,7 @@
                     </a>
                     <div class="contact-btn bg-indigo-500/80 p-5 text-center">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.076-0.02-0.154-0.031-0.232-0.044-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-0.037 0.01-0.055 0.016-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.04 0.062 0.083 0.122 0.129 0.18 0.81 1.03 1.78 1.91 2.86 2.65 0.02 0.014 0.04 0.027 0.06 0.04 0.35 0.21 0.71 0.41 1.08 0.59 0.02 0.01 0.04 0.018 0.06 0.027 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.03 0.004 0.06 0.008 0.09 0.012 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.03-0.004 0.06-0.008 0.09-0.012 0.61-0.09 1.21-0.22 1.8-0.38 0.02-0.009 0.04-0.017 0.06-0.027 0.37-0.18 0.73-0.38 1.08-0.59 0.02-0.013 0.04-0.026 0.06-0.04 1.08-0.74 2.05-1.62 2.86-2.65 0.046-0.058 0.089-0.118 0.129-0.18 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.01-0.092-0.02-0.184-0.038-0.274-0.013-0.066-0.029-0.132-0.049-0.198-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-center">Discord <br><small class="opacity-70 font-normal">mr.vaibhav.p</small></span>
+                        <span class="text-[10px] font-bold uppercase tracking-widest">Discord <br><small class="opacity-70 font-normal">mr.vaibhav.p</small></span>
                     </div>
                     <a href="https://t.me/vaibhavian" target="_blank" class="contact-btn bg-sky-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
