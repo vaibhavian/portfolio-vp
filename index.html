@@ -31,7 +31,7 @@
             pointer-events: none;
         }
 
-        /* Trigger blur ONLY on Desktop (Hover-capable devices) */
+        /* Desktop Hover Trigger */
         @media (hover: hover) {
             body:has(.quote-container:hover) .blur-overlay,
             body:has(.pop-container:hover) .blur-overlay,
@@ -43,6 +43,14 @@
                 backdrop-filter: blur(12px);
                 -webkit-backdrop-filter: blur(12px);
             }
+        }
+
+        /* Mobile Active Trigger (managed via JS) */
+        body.mobile-active-focus .blur-overlay {
+            opacity: 1;
+            visibility: visible;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         /* --- Intensified Text Glow --- */
@@ -74,7 +82,15 @@
             }
         }
 
-        /* --- Aura Bubbles (Hidden on Mobile, Visible on Desktop Hover) --- */
+        /* Mobile focus highlight */
+        .glass-card.is-active {
+            z-index: 40 !important;
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* --- Aura Bubbles --- */
         .aura-bubble {
             display: none;
             position: absolute;
@@ -97,28 +113,64 @@
             pointer-events: none;
             box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
         }
+        
+        /* Show Aura on Mobile Active or Desktop Hover */
+        .quote-container.is-active .aura-bubble,
         @media (min-width: 1024px) {
             .aura-bubble { display: flex; }
             .quote-container:hover .aura-bubble { opacity: 1; }
-            .b1 { top: -20%; left: -5%; transition-delay: 0.05s; }
-            .b2 { top: -25%; right: 10%; transition-delay: 0.1s; }
-            .b3 { top: 40%; left: -15%; transition-delay: 0.15s; }
-            .b4 { top: 40%; right: -15%; transition-delay: 0.2s; }
-            .b5 { bottom: -20%; left: 5%; transition-delay: 0.25s; }
-            .b6 { bottom: -20%; right: -5%; transition-delay: 0.3s; }
+        }
+        .quote-container.is-active .aura-bubble { display: flex; opacity: 1; }
+
+        .b1 { top: -20%; left: -5%; }
+        .b2 { top: -25%; right: 10%; }
+        .b3 { top: 40%; left: -15%; }
+        .b4 { top: 40%; right: -15%; }
+        .b5 { bottom: -20%; left: 5%; }
+        .b6 { bottom: -20%; right: -5%; }
+
+        /* --- Popups (State Driven) --- */
+        .details-popup, .requirements-popup {
+            opacity: 0;
+            visibility: hidden;
+            background: rgba(10, 10, 20, 0.98);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            z-index: 100;
         }
 
-        /* --- Popups (Always Visible on Mobile, Hover on Desktop) --- */
-        .details-popup, .requirements-popup {
-            background: rgba(20, 20, 30, 0.6);
-            border: 1.5px solid rgba(255, 255, 255, 0.2);
-            border-radius: 1.25rem;
-            padding: 1.25rem;
-            margin-top: 1rem;
-            width: 100%;
-            opacity: 1;
-            visibility: visible;
-            display: block;
+        /* Active Mobile state OR Desktop Hover state */
+        .pop-container.is-active .details-popup,
+        .requirements-container.is-active .requirements-popup,
+        @media (min-width: 1024px) {
+            .pop-container:hover .details-popup,
+            .requirements-container:hover .requirements-popup {
+                opacity: 1;
+                visibility: visible;
+                transform: translateX(-50%) translateY(0);
+                pointer-events: auto;
+            }
+        }
+        
+        /* Mobile positioning: slide up within the card or relative */
+        @media (max-width: 1023px) {
+            .details-popup, .requirements-popup {
+                position: relative;
+                left: 0;
+                transform: none;
+                width: 100%;
+                margin-top: 1.5rem;
+                bottom: auto;
+            }
+            .is-active .details-popup,
+            .is-active .requirements-popup {
+                opacity: 1;
+                visibility: visible;
+            }
         }
 
         @media (min-width: 1024px) {
@@ -128,24 +180,10 @@
                 left: 50%;
                 transform: translateX(-50%) translateY(15px);
                 width: 320px;
-                opacity: 0;
-                visibility: hidden;
-                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                pointer-events: none;
-                z-index: 100;
-                background: rgba(10, 10, 20, 0.98);
-                border: 2px solid rgba(255, 255, 255, 0.4);
-                margin-top: 0;
-            }
-            .pop-container:hover .details-popup,
-            .requirements-container:hover .requirements-popup { 
-                opacity: 1; 
-                visibility: visible; 
-                transform: translateX(-50%) translateY(0); 
             }
         }
 
-        /* --- Slider Styles (Mobile Friendly) --- */
+        /* --- Slider --- */
         #slider-container { position: fixed; inset: 0; z-index: 100; transition: opacity 0.8s ease; }
         #slider-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
         .slider-image { width: 100%; height: 100%; object-fit: cover; }
@@ -154,10 +192,7 @@
             z-index: 20; transform: translateX(-50%); cursor: ew-resize;
             display: flex; align-items: center; justify-content: center;
         }
-        .slider-handle-line {
-            width: 4px; height: 100%; background: white;
-            box-shadow: 0 0 20px rgba(255,255,255,0.5);
-        }
+        .slider-handle-line { width: 4px; height: 100%; background: white; }
         .page-content { display: none; opacity: 0; transition: opacity 1s ease; }
         .page-content.active { display: block; opacity: 1; }
 
@@ -173,7 +208,7 @@
         }
         .contact-btn {
             border-radius: 1.5rem;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             flex-direction: column;
@@ -187,9 +222,7 @@
         .service-img-placeholder {
             width: 100%; height: 160px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.2); font-size: 11px; text-transform: uppercase; font-weight: 700;
         }
-
         .software-icon { width: 52px; height: 52px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5)); }
-        .skill-icon { width: 42px; height: 42px; margin-bottom: 0.75rem; color: #c4b5fd; }
     </style>
 </head>
 <body class="text-white">
@@ -226,7 +259,7 @@
     <div id="professional-page" class="page-content">
         <header class="bg-black/60 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5">
             <div class="container mx-auto flex justify-between items-center p-5 md:p-6">
-                <a href="#" class="text-xl md:text-2xl font-bold home-link">Vaibhav Prasad</a>
+                <a href="#" class="text-2xl font-bold home-link">Vaibhav Prasad</a>
                 <nav class="hidden lg:flex space-x-8 font-medium">
                     <a href="#about-prof" class="hover:text-violet-300 transition">About</a>
                     <a href="#experience-prof" class="hover:text-violet-300 transition">Experience</a>
@@ -247,11 +280,10 @@
                 </div>
             </section>
 
-            <!-- EXPERIENCE SECTION -->
             <section id="experience-prof">
-                <h2 class="text-3xl font-bold mb-12 italic underline decoration-violet-500/20">Work Experience</h2>
+                <h2 class="text-3xl font-bold text-center mb-12 italic underline decoration-violet-500/20">Work Experience</h2>
                 <div class="max-w-5xl mx-auto space-y-8 text-left">
-                    <div class="glass-card p-8 md:p-12">
+                    <div class="glass-card p-8 md:p-12 observe-focus">
                         <div class="flex flex-col md:flex-row md:justify-between mb-4">
                             <h3 class="text-2xl font-bold">Freelancer @ Digital Chitrakaar</h3>
                             <span class="text-violet-300 font-semibold">Apr 2025 - Present</span>
@@ -262,76 +294,25 @@
                             <span class="badge">Adobe Photoshop</span><span class="badge">Wondershare Filmora</span><span class="badge">SEO</span>
                         </div>
                     </div>
-                    <div class="glass-card p-8 md:p-12">
-                        <div class="flex flex-col md:flex-row md:justify-between mb-4">
-                            <h3 class="text-2xl font-bold">Aircraft Design & Research Intern</h3>
-                            <span class="text-violet-300 font-semibold">Jan 2025</span>
-                        </div>
-                        <p class="text-gray-400 mb-6 italic">Dwello Aerospace | Internship (Remote)</p>
-                        <p class="text-gray-300 mb-6 leading-relaxed">Aerodynamics research and Fusion 360 modeling for aerospace frameworks.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="badge">Aerodynamics</span><span class="badge">Autodesk Fusion 360</span>
-                        </div>
-                    </div>
                 </div>
             </section>
 
-            <!-- PROJECTS SECTION -->
-            <section id="projects-prof">
-                <h2 class="text-3xl font-bold mb-12">Key Projects</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto text-left">
-                    <div class="glass-card p-8 h-full flex flex-col border-violet-500/20">
-                        <h3 class="text-xl font-bold text-violet-300 mb-2">Personal Portfolio Development</h3>
-                        <p class="text-gray-300 text-sm mb-6">Built using front-end development. Upskilled during 1st and 2nd year of engineering.</p>
-                        <div class="mt-auto"><span class="badge">Front-End Dev</span></div>
-                    </div>
-                    <div class="glass-card p-8 h-full flex flex-col">
-                        <h3 class="text-xl font-bold text-white mb-2">2 Stage Gear Reduction</h3>
-                        <p class="text-gray-400 text-sm mb-6">SolidWorks modeling and assembly. Associated with DYPCOE. Mar-May 2025.</p>
-                        <div class="mt-auto"><span class="badge">SOLIDWORKS</span></div>
-                    </div>
-                    <div class="glass-card p-8 h-full flex flex-col">
-                        <h3 class="text-xl font-bold text-white mb-2">5 Stage Transmission Box</h3>
-                        <p class="text-gray-400 text-sm mb-6">CATIA V5 advanced surface modeling. Associated with DYPCOE. Mar-May 2025.</p>
-                        <div class="mt-auto"><span class="badge">CATIA V5</span></div>
-                    </div>
-                    <div class="glass-card p-8 h-full flex flex-col">
-                        <h3 class="text-xl font-bold text-white mb-2">Ramjet Engine Design</h3>
-                        <p class="text-gray-400 text-sm mb-6">Aerodynamic optimization for conceptual propulsion. Dwello Aerospace. Jan 2025.</p>
-                        <div class="mt-auto"><span class="badge">Fusion 360</span></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- COMMUNITY IMPACT SECTION -->
             <section id="community-impact">
                 <h2 class="text-3xl font-bold mb-12">Community & Impact</h2>
                 <div class="max-w-5xl mx-auto space-y-6 text-left">
-                    <div class="glass-card p-8 border-sky-500/20">
+                    <div class="glass-card p-8 border-sky-500/20 observe-focus">
                         <h3 class="text-2xl font-bold text-sky-400 mb-2">Admin | SPPU Mechanical (13K+)</h3>
                         <p class="text-gray-400 text-sm mb-4">Sep 2023 - Dec 2025</p>
                         <p class="text-gray-300 leading-relaxed mb-4">Guided 100+ students to clear backlogs through tailored academic support.</p>
                         <p class="text-sky-300/40 uppercase font-bold text-[10px] tracking-widest">🔩 SPPU MECHANICAL ENGINEERING ⚙</p>
                     </div>
-                    <div class="glass-card p-8 border-indigo-500/20">
-                        <h3 class="text-2xl font-bold text-indigo-400">Server Owner | Improve Insights</h3>
-                        <p class="text-gray-400 text-sm mb-4">Dec 2023 - Present</p>
-                        <div class="p-6 bg-black/40 rounded-2xl border border-white/5">
-                            <h4 class="text-white font-bold mb-3 uppercase tracking-tighter">🚀 Welcome to the GRIND ZONE 💼💪</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed">No shortcuts. Action-takers only. Focus on multiple income streams and growth mindset.</p>
-                        </div>
-                    </div>
-                    <div class="glass-card p-8 flex justify-between items-center">
-                        <h3 class="text-xl font-bold">Project Executive @ EDC DYPCOE</h3>
-                        <p class="text-gray-400 text-sm">Jun 2023 - Jan 2024</p>
-                    </div>
                 </div>
             </section>
 
-            <!-- SYNCED CONTACT FOOTER (PROFESSIONAL) -->
+            <!-- SYNCED CONTACT FOOTER -->
             <section id="contact-footer-prof" class="pt-20">
                 <h2 class="text-3xl font-bold mb-12">Connect With Me</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-5xl mx-auto px-4">
                     <a href="mailto:vaibhvajprasad@gmail.com" class="contact-btn bg-red-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         <span class="text-[10px] font-bold uppercase">Gmail</span>
@@ -348,14 +329,6 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         <span class="text-[10px] font-bold uppercase">LinkedIn</span>
                     </a>
-                    <div class="contact-btn bg-indigo-500/80 p-5 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-0.037 0.01-0.055 0.016-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.04 0.062 0.083 0.122 0.129 0.18 0.81 1.03 1.78 1.91 2.86 2.65 0.02 0.014 0.04 0.027 0.06 0.04 0.35 0.21 0.71 0.41 1.08 0.59 0.02 0.01 0.04 0.018 0.06 0.027 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.03 0.004 0.06 0.008 0.09 0.012 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.03-0.004 0.06-0.008 0.09-0.012 0.61-0.09 1.21-0.22 1.8-0.38 0.02-0.009 0.04-0.017 0.06-0.027 0.37-0.18 0.73-0.38 1.08-0.59 0.02-0.013 0.04-0.026 0.06-0.04 1.08-0.74 2.05-1.62 2.86-2.65 0.046-0.058 0.089-0.118 0.129-0.18 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.01-0.092-0.02-0.184-0.038-0.274-0.013-0.066-0.029-0.132-0.049-0.198-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">Discord</span>
-                    </div>
-                    <a href="https://t.me/vaibhavian" target="_blank" class="contact-btn bg-sky-500/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
-                        <span class="text-[10px] font-bold uppercase">Telegram</span>
-                    </a>
                  </div>
             </section>
         </main>
@@ -367,10 +340,10 @@
             <div class="container mx-auto flex justify-between items-center p-5 md:p-6">
                 <a href="#" class="text-2xl font-bold home-link">Vaibhav Prasad</a>
                 <nav class="hidden lg:flex space-x-8 font-medium">
-                    <a href="#about-freelance" class="hover:text-violet-300">About</a>
-                    <a href="#video-showcase" class="hover:text-violet-300">Videos</a>
-                    <a href="#thumbnail-portfolio" class="hover:text-violet-300">Thumbnails</a>
-                    <a href="#services-rates" class="hover:text-violet-300">Rates</a>
+                    <a href="#about-freelance" class="hover:text-violet-300 transition">About</a>
+                    <a href="#video-showcase" class="hover:text-violet-300 transition">Videos</a>
+                    <a href="#thumbnail-portfolio" class="hover:text-violet-300 transition">Thumbnails</a>
+                    <a href="#services-rates" class="hover:text-violet-300 transition">Rates</a>
                     <a href="#contact-footer-freelance" class="hover:text-violet-300 transition">Contact</a>
                 </nav>
             </div>
@@ -378,12 +351,12 @@
 
         <main class="container mx-auto px-4 py-16 space-y-32 text-center">
             <section id="about-freelance" class="overflow-visible pt-10">
-                <div class="max-w-4xl mx-auto quote-container relative">
+                <div class="max-w-4xl mx-auto quote-container relative observe-focus">
                     <div class="aura-bubble b1">Psychology</div><div class="aura-bubble b2">Match the Vibe</div><div class="aura-bubble b3">9 sec Hook!!</div>
                     <div class="aura-bubble b4">Environment</div><div class="aura-bubble b5">Uniques</div><div class="aura-bubble b6">Feeling</div>
 
                     <div class="glass-card p-10 md:p-14 relative z-10">
-                        <p class="text-gray-200 text-lg md:text-2xl italic leading-relaxed font-medium">
+                        <p class="text-gray-200 text-lg md:text-2xl italic leading-relaxed">
                             "Editing is the art of manipulating time and light. I arrange every frame and layer to tell a story that people can truly feel and connect with."
                         </p>
                     </div>
@@ -394,45 +367,37 @@
             <section id="video-showcase">
                 <h2 class="text-3xl font-bold mb-16">Video Editing Portfolio</h2>
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-7xl mx-auto">
-                    <div class="glass-card p-8 flex flex-col items-center">
+                    <div class="glass-card p-8 flex flex-col items-center observe-focus">
                         <svg class="software-icon" viewBox="0 0 128 128"><rect width="128" height="128" rx="24" fill="#00005B"/><text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#9999FF" font-family="Arial" font-weight="900" font-size="64">Ae</text></svg>
                         <h3 class="text-xl font-bold text-violet-300 italic mb-6">Advanced Motion VFX</h3>
                         <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Edit Preview</div>
                     </div>
-                    <div class="glass-card p-8 flex flex-col items-center">
+                    <div class="glass-card p-8 flex flex-col items-center observe-focus">
                         <svg class="software-icon" viewBox="0 0 128 128"><rect width="128" height="128" rx="24" fill="#00005B"/><text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#9999FF" font-family="Arial" font-weight="900" font-size="64">Pr</text></svg>
                         <h3 class="text-xl font-bold text-violet-300 italic mb-6">Pro Storytelling</h3>
                         <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Narrative Preview</div>
                     </div>
-                    <div class="glass-card p-8 flex flex-col items-center">
-                        <svg class="software-icon" viewBox="0 0 128 128"><rect width="128" height="128" rx="24" fill="#00C4CC"/><path d="M44 84V44L84 64L44 84Z" fill="white"/></svg>
-                        <h3 class="text-xl font-bold text-violet-300 italic mb-6">Filmora 14 Pro</h3>
-                        <div class="aspect-video w-full bg-gray-700/30 rounded-2xl flex items-center justify-center font-bold text-gray-500">Fast Shorts Preview</div>
-                    </div>
                 </div>
             </section>
 
-            <!-- Service Rates with MOBILE VISIBLE POPUPS -->
+            <!-- Service Rates -->
             <section id="services-rates" class="pt-32">
-                <h2 class="text-3xl font-bold mb-16 italic">Service Rates & Specs</h2>
+                <h2 class="text-3xl font-bold mb-16 italic text-white">Service Rates & Specs</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-                    <!-- Thumbnail Card -->
-                    <div class="pop-container">
-                        <div class="glass-card p-8 min-h-[480px] flex flex-col items-center">
+                    <div class="pop-container observe-focus">
+                        <div class="glass-card p-8 min-h-[400px] flex flex-col items-center">
                             <div class="service-img-placeholder">Thumbnail Area</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Thumbnail Design</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1k - ₹3k</p>
                             
-                            <!-- Visible by default on mobile, hover on desktop -->
                             <div class="details-popup text-left">
                                 <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
                                 <p class="text-[11px] text-gray-300">1920x1080 | 300 PPI | High Contrast Grade | Optimized for Click Psychology.</p>
                             </div>
                         </div>
                     </div>
-                    <!-- Shorts Card -->
-                    <div class="pop-container">
-                        <div class="glass-card p-8 min-h-[480px] flex flex-col items-center">
+                    <div class="pop-container observe-focus">
+                        <div class="glass-card p-8 min-h-[400px] flex flex-col items-center">
                             <div class="service-img-placeholder">Shorts Area</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Shorts Editing</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1.5k - ₹5k</p>
@@ -443,28 +408,14 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Long Form Card -->
-                    <div class="pop-container">
-                        <div class="glass-card p-8 min-h-[480px] flex flex-col justify-center items-center">
-                            <div class="service-img-placeholder">Long Form Area</div>
-                            <h3 class="text-2xl font-bold mb-4 text-violet-300">Long Form Video</h3>
-                            <p class="text-3xl font-bold text-white mb-6">₹2k - ₹10k</p>
-
-                            <div class="details-popup text-left">
-                                <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
-                                <p class="text-[11px] text-gray-300">8-20+ Mins | 4K Master | Rough Cut to Final Grade | 2 Revisions.</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </section>
 
-            <!-- Final Contact Section with CHECKLIST POPUP (MOBILE VISIBLE) -->
+            <!-- Final Contact Section with Project Checklist Popup -->
             <section id="contact-footer-freelance" class="py-40 border-t border-white/5 overflow-visible">
                 <h2 class="text-3xl font-bold mb-16">Ready to Start?</h2>
                 
-                <div class="max-w-2xl mx-auto requirements-container relative mb-32">
-                    <!-- Contact Box -->
+                <div class="max-w-2xl mx-auto requirements-container relative mb-32 observe-focus">
                     <div class="glass-card p-12 md:p-16 border-violet-500/20 cursor-help">
                         <p class="text-gray-300 font-medium mb-6 text-xl">Send requirements in Doc format to:</p>
                         <a href="mailto:freelancervaibhav.work@gmail.com" class="text-lg md:text-3xl font-bold text-violet-300 hover:text-white transition-all block mb-6">
@@ -472,7 +423,6 @@
                         </a>
                         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold italic">Checklist below for technical demands</p>
                         
-                        <!-- Project Checklist Popup (Visible by default on mobile, hover on desktop) -->
                         <div class="requirements-popup text-left">
                             <h4 class="text-violet-300 font-bold mb-4 border-b border-white/10 pb-2 italic text-lg text-center">Project Checklist</h4>
                             <ul class="text-sm space-y-4 text-gray-300">
@@ -484,8 +434,7 @@
                     </div>
                 </div>
 
-                <!-- SYNCED CONTACT FOOTER (FREELANCER) -->
-                 <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4">
+                <div class="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4">
                     <a href="mailto:freelancervaibhav.work@gmail.com" class="contact-btn bg-red-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Gmail</span>
@@ -498,24 +447,12 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95l-1.46 5.38 5.51-1.44c1.45.84 3.09 1.29 4.8 1.29h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.92-9.91zM18.4 15.25c-.22-.12-1.32-.65-1.52-.73-.21-.08-.36-.12-.52.12-.16.23-.58.73-.71.88-.13.16-.26.17-.48.06-.22-.12-1.02-.38-1.94-1.2-1.11-.97-1.63-1.75-1.87-2.05-.16-.23-.02-.36.11-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.71-.19-.46-.39-.4-.52-.4-.12 0-.28 0-.42 0-.15 0-.39.06-.58.29-.2.23-.75.73-.75 1.79s.77 2.07.88 2.22c.11.16 1.52 2.32 3.68 3.25.5.21.89.34 1.2.43.48.14.91.12 1.26.08.39-.05 1.32-.54 1.5-1.04.19-.5.19-.93.13-1.04-.05-.12-.19-.19-.41-.31z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">WhatsApp</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
-                    </a>
-                    <div class="contact-btn bg-indigo-500/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.076-0.02-0.154-0.031-0.232-0.044-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
-                    </div>
-                    <a href="https://t.me/vaibhavian" target="_blank" class="contact-btn bg-sky-500/80 p-5">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">Telegram</span>
-                    </a>
-                 </div>
+                </div>
             </section>
         </main>
     </div>
 
-    <!-- Universal Global Footer -->
+    <!-- Footer -->
     <footer class="border-t border-white/10 py-10 text-center text-gray-500 text-xs italic">
         &copy; 2026 Vaibhav Prasad. All Rights Reserved.
     </footer>
@@ -539,7 +476,6 @@
                 handle.style.left = `${percent}%`;
                 document.getElementById('professional-content').style.opacity = Math.max(0, (60 - percent) / 30);
                 document.getElementById('freelancer-content').style.opacity = Math.max(0, (percent - 40) / 30);
-                
                 leftImage.style.transform = `scale(${1.05 + ((100-percent)/100)*0.1})`;
                 rightImage.style.transform = `scale(${1.05 + (percent/100)*0.1})`;
             }
@@ -584,6 +520,38 @@
                 freelancePage.classList.remove('active');
                 setInteractionStyles(50);
             }));
+
+            // --- MOBILE ACTIVE VISIBILITY LOGIC ---
+            // Only run on mobile (no-hover devices)
+            if (window.matchMedia("(max-width: 1023px)").matches) {
+                const observerOptions = {
+                    root: null,
+                    threshold: 0.6 // Trigger when 60% of element is visible
+                };
+
+                const observerCallback = (entries) => {
+                    let anyActive = false;
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('is-active');
+                            anyActive = true;
+                        } else {
+                            entry.target.classList.remove('is-active');
+                        }
+                    });
+
+                    // Add global body class to trigger background blur if any informative box is in focus
+                    if (anyActive) {
+                        document.body.classList.add('mobile-active-focus');
+                    } else {
+                        document.body.classList.remove('mobile-active-focus');
+                    }
+                };
+
+                const observer = new IntersectionObserver(observerCallback, observerOptions);
+                const itemsToObserve = document.querySelectorAll('.observe-focus, .pop-container, .requirements-container, .quote-container');
+                itemsToObserve.forEach(item => observer.observe(item));
+            }
 
             setInteractionStyles(50);
         });
