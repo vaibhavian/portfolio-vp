@@ -7,11 +7,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
     
-    <!-- Firebase SDKs (Compat v9) -->
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
-
     <style>
         html { scroll-behavior: smooth; }
         body {
@@ -56,7 +51,15 @@
             backdrop-filter: blur(8px);
         }
 
-        /* --- UI Elements --- */
+        /* --- Intensified Text Glow --- */
+        h1, h2, h3, h4, h5, h6, p, span, li, a { transition: all 0.4s ease; }
+        h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover, 
+        p:hover, span:hover, li:hover, a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 25px rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Smooth Boxes & Backglow --- */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
@@ -77,7 +80,7 @@
             .glass-card:hover {
                 transform: translateY(-8px) scale(1.01);
                 background: rgba(255, 255, 255, 0.1);
-                box-shadow: 0 0 60px 20px rgba(255, 255, 255, 0.15);
+                box-shadow: 0 0 60px 20px rgba(255, 255, 255, 0.15), 0 0 30px 10px rgba(255, 255, 255, 0.1);
                 border-color: rgba(255, 255, 255, 0.4);
                 z-index: 30;
             }
@@ -232,7 +235,7 @@
             <h3 class="text-xl font-bold mb-6">Security Check</h3>
             <p class="text-gray-400 text-sm mb-6">Enter password to unlock "About Me".<br><small id="attempt-count" class="text-violet-400 font-bold">2 attempts remaining</small></p>
             <input type="password" id="pwd-input" class="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 mb-6 focus:outline-none focus:border-violet-500 transition" placeholder="Password...">
-            <div id="pwd-error" class="text-red-500 text-xs mb-4 hidden">Incorrect password. Access will be denied after 2 wrong tries.</div>
+            <div id="pwd-error" class="text-red-500 text-xs mb-4 hidden">Incorrect password.</div>
             <div class="flex gap-3">
                 <button onclick="closeModal()" class="flex-1 py-3 bg-white/10 rounded-xl hover:bg-white/20 transition font-semibold">Cancel</button>
                 <button onclick="checkPassword()" class="flex-1 py-3 bg-violet-600 rounded-xl hover:bg-violet-500 transition font-bold shadow-lg">Unlock</button>
@@ -363,8 +366,15 @@
                         <p class="text-gray-400 text-sm mb-4 italic">Discord | Dec 2023 - Present</p>
                         <div class="p-6 bg-black/40 rounded-2xl border border-white/5 mt-4">
                             <h4 class="text-white font-bold mb-3 uppercase text-xs tracking-widest">🚀 Welcome to the GRIND ZONE 💼💪</h4>
-                            <p class="text-sm text-gray-400">Action-takers focusing on multiple income streams and relentless self-improvement.</p>
+                            <p class="text-sm text-gray-400 leading-relaxed">No shortcuts. Action-takers only. Focused on multiple income streams, skillset leveling, and staying consistent with goals.</p>
                         </div>
+                    </div>
+                    <div class="glass-card p-8 flex flex-col md:flex-row md:justify-between md:items-center observe-focus">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Project Executive</h3>
+                            <p class="text-gray-400 text-sm italic">EDC DYPCOE | Jun 2023 - Jan 2024</p>
+                        </div>
+                        <span class="badge mt-3 md:mt-0">Education Leadership</span>
                     </div>
                 </div>
             </section>
@@ -390,7 +400,7 @@
                         <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                     </a>
                     <div class="contact-btn bg-indigo-500/80 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798zM9.037 15.389c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm5.926 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.934 0.23-1.833 0.58-2.659 1.055-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
@@ -399,7 +409,7 @@
                     </a>
                 </div>
                 <!-- About Me (With Password) -->
-                <button onclick="openModal()" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
+                <button onclick="openModal()" id="about-me-btn" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
             </section>
         </main>
     </div>
@@ -410,10 +420,9 @@
             <div class="container mx-auto flex justify-between items-center p-6">
                 <a href="#" class="text-2xl font-bold home-link">Vaibhav Prasad</a>
                 <nav class="hidden lg:flex space-x-8 font-medium">
-                    <a href="#about-freelance" class="hover:text-violet-300">About</a>
-                    <a href="#video-showcase" class="hover:text-violet-300">Videos</a>
-                    <a href="#thumbnail-portfolio" class="hover:text-violet-300">Thumbnails</a>
-                    <a href="#services-rates" class="hover:text-violet-300">Rates</a>
+                    <a href="#about-freelance" class="hover:text-violet-300 transition">About</a>
+                    <a href="#video-showcase" class="hover:text-violet-300 transition">Videos</a>
+                    <a href="#services-rates" class="hover:text-violet-300 transition">Rates</a>
                     <a href="#contact-footer-freelance" class="hover:text-violet-300 transition">Contact</a>
                 </nav>
             </div>
@@ -520,24 +529,24 @@
                 </div>
 
                  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4">
-                    <a href="mailto:freelancervaibhav.work@gmail.com" class="contact-btn bg-red-500/80">
+                    <a href="mailto:freelancervaibhav.work@gmail.com" class="contact-btn bg-red-500/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Gmail</span>
                     </a>
-                    <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800">
+                    <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.617l-5.21-6.817-6.022 6.817h-3.308l7.732-8.835-8.31-10.67h6.772l4.643 6.257 5.49-6.257z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">X</span>
                     </a>
-                    <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" class="contact-btn bg-green-600/80">
+                    <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" class="contact-btn bg-green-600/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95l-1.46 5.38 5.51-1.44c1.45.84 3.09 1.29 4.8 1.29h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.92-9.91zM18.4 15.25c-.22-.12-1.32-.65-1.52-.73-.21-.08-.36-.12-.52.12-.16.23-.58.73-.71.88-.13.16-.26.17-.48.06-.22-.12-1.02-.38-1.94-1.2-1.11-.97-1.63-1.75-1.87-2.05-.16-.23-.02-.36.11-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.71-.19-.46-.39-.4-.52-.4-.12 0-.28 0-.42 0-.15 0-.39.06-.58.29-.2.23-.75.73-.75 1.79s.77 2.07.88 2.22c.11.16 1.52 2.32 3.68 3.25.5.21.89.34 1.2.43.48.14.91.12 1.26.08.39-.05 1.32-.54 1.5-1.04.19-.5.19-.93.13-1.04-.05-.12-.19-.19-.41-.31z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">WhatsApp</span>
                     </a>
-                    <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80">
+                    <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                     </a>
                     <div class="contact-btn bg-indigo-500/80 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798zM9.037 15.389c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm5.926 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798zM9.037 15.389c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm5.926 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
@@ -555,67 +564,30 @@
     </footer>
 
     <script>
-        // --- FIREBASE SECURITY LOGIC ---
-        const __firebase_config = '{"apiKey": "", "authDomain": "portfolio-vaibhav.firebaseapp.com", "projectId": "portfolio-vaibhav", "storageBucket": "portfolio-vaibhav.appspot.com", "messagingSenderId": "123", "appId": "1:123:web:abc"}';
-        if (typeof firebase !== 'undefined') {
-            try {
-                const firebaseConfig = JSON.parse(__firebase_config);
-                firebase.initializeApp(firebaseConfig);
-                const db = firebase.firestore();
-                const auth = firebase.auth();
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'portfolio-vaibhav';
+        // --- LOCAL STORAGE SECURITY LOGIC (No Firebase) ---
+        const getStorage = (key) => JSON.parse(localStorage.getItem(key) || '{}');
+        const setStorage = (key, data) => localStorage.setItem(key, JSON.stringify(data));
+        
+        const LOCKOUT_KEY = 'portfolio_lockout';
+        const ATTEMPTS_LIMIT = 2;
 
-                let userId = null;
-                let attemptCount = 2;
+        function checkLockoutStatus() {
+            const data = getStorage(LOCKOUT_KEY);
+            const today = new Date().toDateString();
 
-                const initAuth = async () => {
-                    try {
-                        const cred = await auth.signInAnonymously();
-                        userId = cred.user.uid;
-                        checkLockoutStatus();
-                    } catch (err) { console.error(err); }
-                };
-
-                const checkLockoutStatus = async () => {
-                    if (!userId) return;
-                    const docRef = db.doc(`artifacts/${appId}/users/${userId}/security/lockout`);
-                    const snap = await docRef.get();
-                    const today = new Date().toDateString();
-
-                    if (snap.exists) {
-                        const data = snap.data();
-                        if (data.lockoutDate === today && data.attempts >= 2) { hideButtonPermanently(); } 
-                        else if (data.lockoutDate !== today) { await docRef.set({ attempts: 0, lockoutDate: today }); attemptCount = 2; } 
-                        else { attemptCount = 2 - data.attempts; }
-                    } else { await docRef.set({ attempts: 0, lockoutDate: today }); }
-                    updateAttemptDisplay();
-                };
-
-                window.checkPassword = async () => {
-                    const input = document.getElementById('pwd-input').value;
-                    const target = "Zxcvbnm";
-                    const docRef = db.doc(`artifacts/${appId}/users/${userId}/security/lockout`);
-                    const today = new Date().toDateString();
-
-                    if (input === target) { window.open("https://www.youtube.com/playlist?list=PLcgXRhJnk_lQKXYiIBFxdCY1TVdiXiYPM", "_blank"); closeModal(); await docRef.update({ attempts: 0, lockoutDate: today }); } 
-                    else {
-                        const snap = await docRef.get();
-                        let currentAttempts = (snap.data()?.attempts || 0) + 1;
-                        await docRef.update({ attempts: currentAttempts, lockoutDate: today });
-                        attemptCount = 2 - currentAttempts;
-                        updateAttemptDisplay();
-                        if (currentAttempts >= 2) { hideButtonPermanently(); } 
-                        else { document.getElementById('pwd-error').classList.remove('hidden'); }
-                    }
-                };
-
-                initAuth();
-            } catch (e) { console.warn("Firebase not initialized"); }
+            if (data.date !== today) {
+                setStorage(LOCKOUT_KEY, { date: today, attempts: 0 });
+                updateAttemptDisplay(ATTEMPTS_LIMIT);
+            } else if (data.attempts >= ATTEMPTS_LIMIT) {
+                hideButtonPermanently();
+            } else {
+                updateAttemptDisplay(ATTEMPTS_LIMIT - data.attempts);
+            }
         }
 
-        function updateAttemptDisplay() {
+        function updateAttemptDisplay(remaining) {
             const el = document.getElementById('attempt-count');
-            if (el) el.innerText = `${attemptCount} attempts remaining`;
+            if (el) el.innerText = `${remaining} attempts remaining`;
         }
 
         function hideButtonPermanently() {
@@ -623,8 +595,31 @@
             closeModal();
         }
 
+        function checkPassword() {
+            const input = document.getElementById('pwd-input').value;
+            const target = "Zxcvbnm";
+            const data = getStorage(LOCKOUT_KEY);
+            
+            if (input === target) {
+                window.open("https://www.youtube.com/playlist?list=PLcgXRhJnk_lQKXYiIBFxdCY1TVdiXiYPM", "_blank");
+                closeModal();
+            } else {
+                const newAttempts = (data.attempts || 0) + 1;
+                setStorage(LOCKOUT_KEY, { date: new Date().toDateString(), attempts: newAttempts });
+                
+                if (newAttempts >= ATTEMPTS_LIMIT) {
+                    hideButtonPermanently();
+                } else {
+                    document.getElementById('pwd-error').classList.remove('hidden');
+                    updateAttemptDisplay(ATTEMPTS_LIMIT - newAttempts);
+                }
+            }
+        }
+
         // --- NAVIGATION & UI ---
         document.addEventListener('DOMContentLoaded', () => {
+            checkLockoutStatus();
+
             const sliderContainer = document.getElementById('slider-container');
             const slider = document.getElementById('image-slider');
             const handle = slider.querySelector('.slider-handle');
@@ -633,6 +628,7 @@
             const leftImage = leftPanel.querySelector('.slider-image');
             const profPage = document.getElementById('professional-page');
             const freelancePage = document.getElementById('freelancer-page');
+            const homeLinks = document.querySelectorAll('.home-link');
 
             let isDragging = false;
 
@@ -641,8 +637,8 @@
                 handle.style.left = `${percent}%`;
                 document.getElementById('professional-content').style.opacity = Math.max(0, (60 - percent) / 30);
                 document.getElementById('freelancer-content').style.opacity = Math.max(0, (percent - 40) / 30);
-                leftImage.style.transform = `scale(${1.05 + ((100-percent)/100)*0.1})`;
-                rightImage.style.transform = `scale(${1.05 + (percent/100)*0.1})`;
+                leftImage.style.transform = `scale(${1.05 + ((100-percent)/100)*0.1}) translateX(${((100-percent)/100)*5}%)`;
+                rightImage.style.transform = `scale(${1.05 + (percent/100)*0.1}) translateX(${(percent/100)*-5}%)`;
             }
 
             function showPage(pageId) {
