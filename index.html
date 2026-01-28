@@ -112,7 +112,7 @@
         .b1 { top: -20%; left: -5%; } .b2 { top: -25%; right: 10%; } .b3 { top: 40%; left: -15%; }
         .b4 { top: 40%; right: -15%; } .b5 { bottom: -20%; left: 5%; } .b6 { bottom: -20%; right: -5%; }
 
-        /* --- Popups (Adaptive Logic) --- */
+        /* --- Popups --- */
         .details-popup, .requirements-popup {
             opacity: 0;
             visibility: hidden;
@@ -157,10 +157,26 @@
             }
         }
 
+        /* --- Password Modal --- */
+        #password-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        #password-modal.active { display: flex; }
+
         /* --- Slider --- */
-        #slider-container { position: fixed; inset: 0; z-index: 100; transition: opacity 0.8s ease; }
-        #slider-container.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
-        .slider-image { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
+        #slider-container { position: fixed; inset: 0; z-index: 100; }
+        .slider-image { 
+            width: 100%; height: 100%; object-fit: cover; 
+            object-position: center 30%; 
+        }
         @media (min-width: 1024px) {
             .slider-image { object-position: center 20%; }
         }
@@ -169,7 +185,7 @@
             z-index: 20; transform: translateX(-50%); cursor: ew-resize;
             display: flex; align-items: center; justify-content: center;
         }
-        .slider-handle-line { width: 4px; height: 100%; background: white; }
+        .slider-handle-line { width: 4px; height: 100%; background: white; box-shadow: 0 0 20px white; }
         .page-content { display: none; opacity: 0; transition: opacity 1s ease; }
         .page-content.active { display: block; opacity: 1; }
 
@@ -194,46 +210,53 @@
             gap: 0.5rem;
             padding: 1.25rem;
         }
-        .contact-btn:hover { transform: scale(1.1); background: rgba(255, 255, 255, 0.1); border-color: white; z-index: 50; }
-        .contact-btn svg { width: 22px; height: 22px; }
+        .contact-btn:hover { transform: scale(1.1); background: rgba(255,255,255,0.1); border-color: white; z-index: 50; }
+        .contact-btn svg { width: 24px; height: 24px; }
 
         .service-img-placeholder {
-            width: 100%; height: 160px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.2); font-size: 11px; text-transform: uppercase; font-weight: 700;
+            width: 100%; height: 140px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.2); font-size: 10px; text-transform: uppercase; font-weight: 700;
         }
-        .software-icon { width: 52px; height: 52px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5)); }
+        .software-icon { width: 48px; height: 48px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5)); }
     </style>
 </head>
 <body class="text-white">
 
     <div class="blur-overlay"></div>
 
-    <!-- Header Frame Link -->
-    <div class="bg-black/40 backdrop-blur-sm text-center p-2 fixed top-0 w-full z-[101]">
-        <a href="https://sites.google.com/view/vaibhavprasad-portfolio/professional" target="_blank" class="text-xs bg-violet-500/20 border border-violet-500/40 text-violet-200 py-1 px-4 rounded-full transition-colors">
-            Original Framework
-        </a>
+    <!-- Password Modal -->
+    <div id="password-modal">
+        <div class="glass-card p-8 w-full max-w-sm text-center">
+            <h3 class="text-xl font-bold mb-6">Authentication Required</h3>
+            <p class="text-gray-400 text-sm mb-6">Please enter the password to view "About Me"</p>
+            <input type="password" id="pwd-input" class="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 mb-6 focus:outline-none focus:border-violet-500 transition" placeholder="Password...">
+            <div id="pwd-error" class="text-red-500 text-xs mb-4 hidden">Incorrect password. Please try again.</div>
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-3 bg-white/10 rounded-xl hover:bg-white/20 transition font-semibold">Cancel</button>
+                <button onclick="checkPassword()" class="flex-1 py-3 bg-violet-600 rounded-xl hover:bg-violet-500 transition font-bold shadow-lg">Unlock</button>
+            </div>
+        </div>
     </div>
 
     <!-- MAIN SLIDER INTERFACE -->
-    <div id="slider-container" class="pt-10">
+    <div id="slider-container">
         <div id="image-slider" class="relative h-full w-full overflow-hidden">
             <div class="slider-panel right absolute inset-0">
                 <img src="https://raw.githubusercontent.com/vaibhavian/Portfolio-VAIBHAV/main/Gemini_Generated_Image_zrrz8zrrz8zrrz8z.png" alt="Professional" class="slider-image">
-                <div id="professional-content" class="absolute inset-0 p-8 md:p-16 flex flex-col justify-end items-start bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-                    <h2 class="text-4xl md:text-7xl font-extrabold tracking-tighter">PROFESSIONAL</h2>
-                    <p class="mt-2 text-lg md:text-xl text-gray-300 max-w-md">Final year engineering student at DYPCOE and CAD Design Engineer</p>
+                <div id="professional-content" class="absolute inset-0 p-8 md:p-20 flex flex-col justify-end items-start bg-gradient-to-t from-black/90 via-black/30 to-transparent">
+                    <h2 class="text-4xl md:text-8xl font-extrabold tracking-tighter">PROFESSIONAL</h2>
+                    <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-xl">Final year engineering student at DYPCOE and CAD Design Engineer</p>
                 </div>
             </div>
             <div class="slider-panel left absolute inset-0 z-10">
                 <img src="https://raw.githubusercontent.com/vaibhavian/Portfolio-VAIBHAV/main/Gemini_Generated_Image_1xgfa31xgfa31xgf.png" alt="Freelancer" class="slider-image">
-                 <div id="freelancer-content" class="absolute inset-0 p-8 md:p-16 flex flex-col justify-end items-end text-right bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+                 <div id="freelancer-content" class="slider-content absolute inset-0 p-8 md:p-20 flex flex-col justify-end items-end text-right bg-gradient-to-t from-black/90 via-black/30 to-transparent">
                     <h2 class="text-4xl md:text-7xl font-extrabold tracking-tighter">FREELANCER</h2>
-                    <p class="mt-2 text-lg md:text-xl text-gray-300 max-w-md">Visual Attention Architect & Pro Video Editor.</p>
+                    <p class="mt-4 text-lg md:text-2xl text-gray-300 max-w-xl">Visual Attention Architect & Pro Video Editor.</p>
                 </div>
             </div>
             <div class="slider-handle">
                 <div class="slider-handle-line"></div>
-                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-14 h-14 border-2 border-white rounded-full flex items-center justify-center bg-black/60 backdrop-blur-xl shadow-2xl">
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 border-2 border-white rounded-full flex items-center justify-center bg-black/70 backdrop-blur-xl shadow-2xl">
                     <svg class="w-8 h-8" fill="white" viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5V7zm8 0l5 5-5 5V7z"/></svg>
                 </div>
             </div>
@@ -243,13 +266,13 @@
     <!-- PROFESSIONAL PAGE -->
     <div id="professional-page" class="page-content">
         <header class="bg-black/60 backdrop-blur-xl sticky top-0 z-50 border-b border-white/5">
-            <div class="container mx-auto flex justify-between items-center p-5 md:p-6">
+            <div class="container mx-auto flex justify-between items-center p-6">
                 <a href="#" class="text-2xl font-bold home-link">Vaibhav Prasad</a>
                 <nav class="hidden lg:flex space-x-8 font-medium">
                     <a href="#about-prof" class="hover:text-violet-300 transition">About</a>
                     <a href="#experience-prof" class="hover:text-violet-300 transition">Experience</a>
                     <a href="#projects-prof" class="hover:text-violet-300 transition">Projects</a>
-                    <a href="#community-impact" class="hover:text-violet-300 transition">Impact</a>
+                    <a href="#community-impact-prof" class="hover:text-violet-300 transition">Impact</a>
                     <a href="#contact-footer-prof" class="hover:text-violet-300 transition">Contact</a>
                 </nav>
             </div>
@@ -257,7 +280,7 @@
 
         <main class="container mx-auto px-4 py-16 space-y-32 text-center">
             <section id="about-prof">
-                <h2 class="text-3xl md:text-5xl font-bold mb-8">About Me</h2>
+                <h2 class="text-4xl font-bold mb-8 italic">About Me</h2>
                 <div class="glass-card p-8 md:p-12 max-w-4xl mx-auto">
                     <p class="text-gray-300 text-lg leading-relaxed">
                         I leverage technical engineering depth to solve complex modeling challenges and build data-driven front-end interfaces. Currently completing my final year at DYPCOE.
@@ -267,123 +290,96 @@
 
             <!-- WORK EXPERIENCE -->
             <section id="experience-prof">
-                <h2 class="text-3xl font-bold mb-12 italic underline decoration-violet-500/20">Work Experience</h2>
+                <h2 class="text-4xl font-bold mb-12">Work Experience</h2>
                 <div class="max-w-5xl mx-auto space-y-8 text-left">
                     <div class="glass-card p-8 md:p-12 observe-focus">
                         <div class="flex flex-col md:flex-row md:justify-between mb-4">
                             <h3 class="text-2xl font-bold">Freelancer @ Digital Chitrakaar</h3>
-                            <span class="text-violet-300 font-bold uppercase tracking-widest text-sm">Apr 2025 - Present (10 mos)</span>
+                            <span class="text-violet-300 font-bold uppercase tracking-widest text-sm">Apr 2025 - Present</span>
                         </div>
-                        <p class="text-gray-400 mb-4 italic font-semibold">Self-employed | Pune, Maharashtra (Hybrid)</p>
-                        <p class="text-gray-300 leading-relaxed mb-6">
-                            Specializing in Thumbnail Design, SEO, Logo Design, Website interface design, Content Creation, and Marketing. Utilizing Attention Psychology and Business Analysis to build high-CTR digital identities.
-                        </p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="badge">Adobe Photoshop</span><span class="badge">Wondershare Filmora</span><span class="badge">Attention Psychology</span><span class="badge">SEO</span><span class="badge">+3 skills</span>
+                        <p class="text-gray-300 leading-relaxed">Specializing in Thumbnail Design, SEO, Logo Design, and marketing interfaces with a focus on Attention Psychology.</p>
+                        <div class="flex flex-wrap gap-2 mt-6">
+                            <span class="badge">Adobe Photoshop</span><span class="badge">Wondershare Filmora</span><span class="badge">SEO</span>
                         </div>
                     </div>
                     <div class="glass-card p-8 md:p-12 observe-focus">
                         <div class="flex flex-col md:flex-row md:justify-between mb-4">
                             <h3 class="text-2xl font-bold">Aircraft Design & Research Intern</h3>
-                            <span class="text-violet-300 font-bold uppercase tracking-widest text-sm">Jan 2025 - Jan 2025</span>
+                            <span class="text-violet-300 font-bold uppercase tracking-widest text-sm">Jan 2025</span>
                         </div>
-                        <p class="text-gray-400 mb-4 italic font-semibold">Dwello Aerospace | Internship (Remote)</p>
-                        <p class="text-gray-300 mb-6 leading-relaxed">
-                            Researching aerodynamics and conceptual aerospace frameworks. Focused on CAD modeling for propulsion systems and structural validation using Fusion 360.
-                        </p>
-                        <div class="flex flex-wrap gap-2"><span class="badge">Aerodynamics</span><span class="badge">Autodesk Fusion 360</span><span class="badge">+4 skills</span></div>
+                        <p class="text-gray-300 leading-relaxed">Aerodynamics research and CAD modeling for advanced propulsion frameworks at Dwello Aerospace.</p>
+                        <div class="flex flex-wrap gap-2 mt-6"><span class="badge">Fusion 360</span><span class="badge">Aerodynamics</span></div>
                     </div>
                 </div>
             </section>
 
             <!-- PROJECTS -->
             <section id="projects-prof">
-                <h2 class="text-4xl font-bold mb-12 italic text-white">Engineering & Tech Projects</h2>
+                <h2 class="text-4xl font-bold mb-12">Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto text-left">
-                    <div class="glass-card p-8 h-full flex flex-col observe-focus border-violet-500/20">
-                        <h3 class="text-xl font-bold text-violet-300 mb-2">Personal Portfolio Development</h3>
-                        <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">
-                            Building a high-performance interactive portfolio using modern front-end dev tools. Upskilled during 1st and 2nd year of engineering to master UX/UI logic and interaction design.
-                        </p>
-                        <div class="mt-auto"><span class="badge">Front-End</span><span class="badge">Three.js</span></div>
+                    <div class="glass-card p-8 flex flex-col observe-focus h-full">
+                        <h3 class="text-xl font-bold mb-2">5 Stage Transmission Box - CATIA V5</h3>
+                        <p class="text-gray-300 text-sm mb-6 flex-grow">Advanced surface modeling and multi-stage assembly validation at DYPCOE. Mar-May 2025.</p>
+                        <div class="mt-auto"><span class="badge">CATIA V5</span></div>
                     </div>
-                    <div class="glass-card p-8 h-full flex flex-col observe-focus">
-                        <h3 class="text-xl font-bold mb-2">2 Stage Gear Reduction - SolidWorks</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025 | DYPCOE</p>
-                        <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">CAD modeling and torque analysis of gear systems for mechanical transmission efficiency. Associated with D. Y. Patil College of Engineering.</p>
-                        <div class="mt-auto"><span class="badge">SOLIDWORKS</span><span class="badge">CAD Modeling</span></div>
-                    </div>
-                    <div class="glass-card p-8 h-full flex flex-col observe-focus">
-                        <h3 class="text-xl font-bold mb-2">5 Stage Transmission Gear Box - CATIA V5</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025 | DYPCOE</p>
-                        <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">Advanced surface modeling and multi-stage assembly validation. High-precision gear meshing and structural analysis.</p>
-                        <div class="mt-auto"><span class="badge">CATIA V5</span><span class="badge">Mechanical Assembly</span></div>
-                    </div>
-                    <div class="glass-card p-8 h-full flex flex-col observe-focus">
+                    <div class="glass-card p-8 flex flex-col observe-focus h-full">
                         <h3 class="text-xl font-bold mb-2">Design of Ramjet Engine</h3>
-                        <p class="text-gray-400 text-sm mb-4 italic">Jan 2025 - Jan 2025 | Dwello Aerospace</p>
-                        <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">Conceptual aerodynamic casing design and thermal flow research for a high-velocity ramjet propulsion unit.</p>
-                        <div class="mt-auto"><span class="badge">Autodesk Fusion 360</span><span class="badge">Aerodynamics</span></div>
+                        <p class="text-gray-300 text-sm mb-6 flex-grow">Aerodynamic casing design and thermal optimization for high-speed propulsion. Jan 2025.</p>
+                        <div class="mt-auto"><span class="badge">Autodesk Fusion 360</span></div>
                     </div>
                 </div>
             </section>
 
-            <!-- COMMUNITY -->
-            <section id="community-impact">
+            <!-- COMMUNITY IMPACT (at bottom as requested) -->
+            <section id="community-impact-prof">
                 <h2 class="text-4xl font-bold mb-12">Community Leadership</h2>
                 <div class="max-w-5xl mx-auto space-y-8 text-left">
-                    <div class="glass-card p-8 md:p-12 border-sky-500/20 observe-focus">
+                    <div class="glass-card p-8 border-sky-500/20 observe-focus">
                         <h3 class="text-2xl font-bold text-sky-400 mb-2">Admin | SPPU Mechanical (13K+)</h3>
-                        <p class="text-gray-400 text-sm mb-6">Telegram Messenger | Sep 2023 - Dec 2025 (2 yrs 4 mos)</p>
-                        <p class="text-gray-300 leading-relaxed mb-6">Guided more than 100+ students to successfully clear backlogs through tailored academic support and focused resource sharing.</p>
-                        <p class="text-sky-300/40 uppercase font-bold text-[10px] tracking-widest">🔩 SPPU MECHANICAL ENGINEERING ⚙</p>
+                        <p class="text-gray-300 mb-4">Guided 100+ students to clear backlogs through tailored academic support on Telegram.</p>
+                        <p class="text-sky-300/40 font-bold text-[10px] tracking-widest">🔩 SPPU MECHANICAL ENGINEERING ⚙</p>
                     </div>
-                    <div class="glass-card p-8 md:p-12 border-indigo-500/20 observe-focus">
+                    <div class="glass-card p-8 border-indigo-500/20 observe-focus">
                         <h3 class="text-2xl font-bold text-indigo-400 mb-2">Server Owner | Improve Insights</h3>
-                        <p class="text-gray-400 text-sm mb-6">Discord | Dec 2023 - Present (2 yrs 2 mos)</p>
-                        <p class="text-gray-300 italic mb-6">"When you work on yourself, you create a fortune!"</p>
-                        <div class="p-6 bg-black/40 rounded-2xl border border-white/5">
-                            <h4 class="text-white font-bold mb-3 uppercase tracking-tighter">🚀 Welcome to the GRIND ZONE 💼💪</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed">No shortcuts. Action-takers only. Focused on multiple income streams, skillset leveling, and staying consistent with goals.</p>
+                        <div class="p-6 bg-black/40 rounded-2xl border border-white/5 mt-4">
+                            <h4 class="text-white font-bold mb-3 uppercase text-xs tracking-widest">🚀 Welcome to the GRIND ZONE</h4>
+                            <p class="text-sm text-gray-400">Action-takers focusing on multiple income streams and relentless self-improvement.</p>
                         </div>
-                    </div>
-                    <div class="glass-card p-8 flex flex-col md:flex-row md:justify-between md:items-center observe-focus">
-                        <h3 class="text-xl font-bold">Project Executive @ EDC DYPCOE</h3>
-                        <p class="text-gray-400 text-sm">Jun 2023 - Jan 2024 (8 mos)</p>
-                        <span class="badge mt-2 md:mt-0">Education Leadership</span>
                     </div>
                 </div>
             </section>
 
-            <!-- SYNCED CONTACT FOOTER (PROFESSIONAL) -->
+            <!-- SYNCED CONTACT FOOTER -->
             <section id="contact-footer-prof" class="pt-20 border-t border-white/5">
-                <h2 class="text-4xl font-bold mb-12 italic text-white">Connect With Me</h2>
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto px-4">
+                <h2 class="text-4xl font-bold mb-12 italic">Connect With Me</h2>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 max-w-6xl mx-auto px-4 mb-20">
                     <a href="mailto:vaibhvajprasad@gmail.com" class="contact-btn bg-red-500/80">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">Gmail</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">Gmail</span>
                     </a>
                     <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.617l-5.21-6.817-6.022 6.817h-3.308l7.732-8.835-8.31-10.67h6.772l4.643 6.257 5.49-6.257z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">X</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">X</span>
                     </a>
                     <a href="https://wa.me/message/2LFERKM2XZMIK1?src=qr" target="_blank" class="contact-btn bg-green-600/80">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95l-1.46 5.38 5.51-1.44c1.45.84 3.09 1.29 4.8 1.29h.01c5.46 0 9.91-4.45 9.91-9.91s-4.45-9.91-9.92-9.91zM18.4 15.25c-.22-.12-1.32-.65-1.52-.73-.21-.08-.36-.12-.52.12-.16.23-.58.73-.71.88-.13.16-.26.17-.48.06-.22-.12-1.02-.38-1.94-1.2-1.11-.97-1.63-1.75-1.87-2.05-.16-.23-.02-.36.11-.48.11-.11.24-.28.36-.42.12-.14.16-.23.24-.39.08-.16.04-.3-.02-.42-.06-.12-.52-1.25-.71-1.71-.19-.46-.39-.4-.52-.4-.12 0-.28 0-.42 0-.15 0-.39.06-.58.29-.2.23-.75.73-.75 1.79s.77 2.07.88 2.22c.11.16 1.52 2.32 3.68 3.25.5.21.89.34 1.2.43.48.14.91.12 1.26.08.39-.05 1.32-.54 1.5-1.04.19-.5.19-.93.13-1.04-.05-.12-.19-.19-.41-.31z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">WhatsApp</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">WhatsApp</span>
                     </a>
                     <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">LinkedIn</span>
                     </a>
                     <div class="contact-btn bg-indigo-500/80 text-center">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-0.037 0.01-0.055 0.016-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.04 0.062 0.083 0.122 0.129 0.18 0.81 1.03 1.78 1.91 2.86 2.65 0.02 0.014 0.04 0.027 0.06 0.04 0.35 0.21 0.71 0.41 1.08 0.59 0.02 0.01 0.04 0.018 0.06 0.027 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.03 0.004 0.06 0.008 0.09 0.012 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.03-0.004 0.06-0.008 0.09-0.012 0.61-0.09 1.21-0.22 1.8-0.38 0.02-0.009 0.04-0.017 0.06-0.027 0.37-0.18 0.73-0.38 1.08-0.59 0.02-0.013 0.04-0.026 0.06-0.04 1.08-0.74 2.05-1.62 2.86-2.65 0.046-0.058 0.089-0.118 0.129-0.18 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.01-0.092-0.02-0.184-0.038-0.274-0.013-0.066-0.029-0.132-0.049-0.198-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
-                        <span class="text-[10px] font-bold uppercase mt-1">Telegram</span>
+                        <span class="text-[10px] font-bold uppercase mt-2">Telegram</span>
                     </a>
-                 </div>
+                </div>
+                <!-- About Me (With Password) -->
+                <button onclick="openModal()" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
             </section>
         </main>
     </div>
@@ -396,7 +392,6 @@
                 <nav class="hidden lg:flex space-x-8 font-medium">
                     <a href="#about-freelance" class="hover:text-violet-300">About</a>
                     <a href="#video-showcase" class="hover:text-violet-300">Videos</a>
-                    <a href="#thumbnail-portfolio" class="hover:text-violet-300">Thumbnails</a>
                     <a href="#services-rates" class="hover:text-violet-300">Rates</a>
                     <a href="#contact-footer-freelance" class="hover:text-violet-300 transition">Contact</a>
                 </nav>
@@ -439,12 +434,12 @@
             </section>
 
             <!-- TRIPLE SERVICE RATES -->
-            <section id="services-rates" class="pt-32">
+            <section id="services-rates">
                 <h2 class="text-4xl font-bold mb-16 italic text-white">Service Rates & Specs</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
                     <div class="pop-container observe-focus">
                         <div class="glass-card p-8 min-h-[480px] flex flex-col items-center">
-                            <div class="service-img-placeholder">Thumbnails Area</div>
+                            <div class="service-img-placeholder">Thumbnail</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Thumbnail Design</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1k - ₹3k</p>
                             <div class="details-popup text-left">
@@ -455,7 +450,7 @@
                     </div>
                     <div class="pop-container observe-focus">
                         <div class="glass-card p-8 min-h-[480px] flex flex-col items-center">
-                            <div class="service-img-placeholder">Shorts Area</div>
+                            <div class="service-img-placeholder">Shorts</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Shorts Editing</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1.5k - ₹5k</p>
                             <div class="details-popup text-left">
@@ -466,12 +461,12 @@
                     </div>
                     <div class="pop-container observe-focus">
                         <div class="glass-card p-8 min-h-[480px] flex flex-col justify-center items-center">
-                            <div class="service-img-placeholder">Long Form Area</div>
+                            <div class="service-img-placeholder">Long Form</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Long Form Video</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹2k - ₹10k</p>
                             <div class="details-popup text-left">
                                 <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
-                                <p class="text-[11px] text-gray-300">8-20+ Mins | 4K Master | Rough Cut to Final Grade | Narrative Storytelling flow.</p>
+                                <p class="text-[11px] text-gray-300">8-20+ Mins | 4K Master | Rough Cut to Final Grade | Narrative Storytelling.</p>
                             </div>
                         </div>
                     </div>
@@ -501,7 +496,6 @@
                     </div>
                 </div>
 
-                <!-- FULL SYNCED FOOTER (FREELANCER) -->
                  <div class="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 px-4">
                     <a href="mailto:freelancervaibhav.work@gmail.com" class="contact-btn bg-red-500/80">
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
@@ -519,8 +513,8 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                     </a>
-                    <div class="contact-btn bg-indigo-500/80 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-0.037 0.01-0.055 0.016-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.02 0.066-0.036 0.132-0.049 0.198-0.018 0.09-0.028 0.182-0.038 0.274-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.04 0.062 0.083 0.122 0.129 0.18 0.81 1.03 1.78 1.91 2.86 2.65 0.02 0.014 0.04 0.027 0.06 0.04 0.35 0.21 0.71 0.41 1.08 0.59 0.02 0.01 0.04 0.018 0.06 0.027 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.03 0.004 0.06 0.008 0.09 0.012 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.03-0.004 0.06-0.008 0.09-0.012 0.61-0.09 1.21-0.22 1.8-0.38 0.02-0.009 0.04-0.017 0.06-0.027 0.37-0.18 0.73-0.38 1.08-0.59 0.02-0.013 0.04-0.026 0.06-0.04 1.08-0.74 2.05-1.62 2.86-2.65 0.046-0.058 0.089-0.118 0.129-0.18 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.01-0.092-0.02-0.184-0.038-0.274-0.013-0.066-0.029-0.132-0.049-0.198-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
+                    <div class="contact-btn bg-indigo-500/80">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.934 0.23-1.833 0.58-2.659 1.055-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
@@ -528,11 +522,13 @@
                         <span class="text-[10px] font-bold uppercase mt-1">Telegram</span>
                     </a>
                 </div>
+                <!-- About Me (With Password) -->
+                <button onclick="openModal()" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
             </section>
         </main>
     </div>
 
-    <!-- Universal Footer -->
+    <!-- Footer -->
     <footer class="border-t border-white/10 py-10 text-center text-gray-500 text-xs italic">
         &copy; 2026 Vaibhav Prasad. All Rights Reserved.
     </footer>
@@ -604,35 +600,47 @@
 
             // --- MOBILE SCROLL-FOCUS LOGIC ---
             if (window.matchMedia("(max-width: 1023px)").matches) {
-                const observerOptions = {
-                    root: null,
-                    threshold: 0.6 // Focus when centered
-                };
-
+                const observerOptions = { root: null, threshold: 0.6 };
                 const observerCallback = (entries) => {
                     let focused = false;
                     entries.forEach(entry => {
                         if (entry.isIntersecting) {
                             entry.target.classList.add('is-active');
                             focused = true;
-                        } else {
-                            entry.target.classList.remove('is-active');
-                        }
+                        } else { entry.target.classList.remove('is-active'); }
                     });
-
-                    if (focused) {
-                        document.body.classList.add('mobile-active-focus');
-                    } else {
-                        document.body.classList.remove('mobile-active-focus');
-                    }
+                    if (focused) document.body.classList.add('mobile-active-focus');
+                    else document.body.classList.remove('mobile-active-focus');
                 };
-
                 const observer = new IntersectionObserver(observerCallback, observerOptions);
-                const items = document.querySelectorAll('.observe-focus, .pop-container, .requirements-container, .quote-container');
-                items.forEach(item => observer.observe(item));
+                document.querySelectorAll('.observe-focus, .pop-container, .requirements-container, .quote-container').forEach(item => observer.observe(item));
             }
 
             setInteractionStyles(50);
+        });
+
+        // --- PASSWORD MODAL LOGIC ---
+        function openModal() {
+            document.getElementById('password-modal').classList.add('active');
+            document.getElementById('pwd-input').focus();
+        }
+        function closeModal() {
+            document.getElementById('password-modal').classList.remove('active');
+            document.getElementById('pwd-input').value = "";
+            document.getElementById('pwd-error').classList.add('hidden');
+        }
+        function checkPassword() {
+            const input = document.getElementById('pwd-input').value;
+            const target = "Zxcvbnm";
+            if (input === target) {
+                window.open("https://www.youtube.com/playlist?list=PLcgXRhJnk_lQKXYiIBFxdCY1TVdiXiYPM", "_blank");
+                closeModal();
+            } else {
+                document.getElementById('pwd-error').classList.remove('hidden');
+            }
+        }
+        document.getElementById('pwd-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
         });
     </script>
 </body>
