@@ -21,7 +21,7 @@
         .blur-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(0px);
             -webkit-backdrop-filter: blur(0px);
             opacity: 0;
@@ -36,6 +36,7 @@
             body:has(.pop-container:hover) .blur-overlay,
             body:has(.requirements-container:hover) .blur-overlay,
             body:has(.quote-container:hover) .blur-overlay,
+            body:has(.skill-reveal-container:hover) .blur-overlay,
             body:has(.contact-btn:hover) .blur-overlay,
             body:has(.glass-card:hover) .blur-overlay {
                 opacity: 1;
@@ -65,8 +66,8 @@
 
         .glass-card.is-active {
             z-index: 40 !important;
-            border-color: rgba(255, 255, 255, 0.5);
-            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         @media (hover: hover) {
@@ -79,16 +80,47 @@
             }
         }
 
-        /* --- Aura Bubbles --- */
+        /* --- Skill Reveal Bubbles (Black & White Style) --- */
+        .skill-bubble {
+            position: absolute;
+            padding: 12px 24px;
+            background: #000000;
+            border: 2px solid #ffffff;
+            border-radius: 9999px;
+            color: white;
+            font-weight: 700;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .skill-reveal-container { position: relative; z-index: 50; }
+        .skill-reveal-container:hover .skill-bubble,
+        .skill-reveal-container.is-active .skill-bubble { opacity: 1; }
+
+        .s1 { top: 0; left: 0; transform: translate(50%, 50%); }
+        .s2 { top: 0; right: 0; transform: translate(-50%, 50%); }
+        .s3 { bottom: 0; left: 0; transform: translate(50%, -50%); }
+        .s4 { bottom: 0; right: 0; transform: translate(-50%, -50%); }
+
+        .skill-reveal-container:hover .s1, .skill-reveal-container.is-active .s1 { transform: translate(-30px, -40px) scale(1.1); }
+        .skill-reveal-container:hover .s2, .skill-reveal-container.is-active .s2 { transform: translate(30px, -40px) scale(1.1); }
+        .skill-reveal-container:hover .s3, .skill-reveal-container.is-active .s3 { transform: translate(-30px, 40px) scale(1.1); }
+        .skill-reveal-container:hover .s4, .skill-reveal-container.is-active .s4 { transform: translate(30px, 40px) scale(1.1); }
+
+        /* --- Aura Bubbles (Black & White Style) --- */
         .aura-bubble {
             display: none;
             position: absolute;
             width: clamp(90px, 15vw, 115px);
             height: clamp(90px, 15vw, 115px);
             border-radius: 50%;
-            background: rgba(25, 25, 35, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1.5px solid rgba(167, 139, 250, 0.6);
+            background: #000000;
+            border: 2px solid #ffffff;
             align-items: center;
             justify-content: center;
             text-align: center;
@@ -98,11 +130,12 @@
             padding: 12px;
             opacity: 0;
             transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 50; 
+            z-index: 100;
             pointer-events: none;
-            box-shadow: 0 0 30px rgba(167, 139, 250, 0.4);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
         
+        .quote-container { position: relative; z-index: 50; }
         .quote-container.is-active .aura-bubble { display: flex; opacity: 1; }
         @media (min-width: 1024px) {
             .aura-bubble { display: flex; }
@@ -112,26 +145,40 @@
         .b1 { top: -20%; left: -5%; } .b2 { top: -25%; right: 10%; } .b3 { top: 40%; left: -15%; }
         .b4 { top: 40%; right: -15%; } .b5 { bottom: -20%; left: 5%; } .b6 { bottom: -20%; right: -5%; }
 
-        /* --- Popups --- */
+        /* --- High Contrast Popups (Black & White, FRONT LAYER) --- */
         .details-popup, .requirements-popup {
             opacity: 0;
             visibility: hidden;
-            background: rgba(10, 10, 20, 0.98);
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: #000000;
+            border: 2px solid #ffffff;
             border-radius: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 0 0 50px rgba(255, 255, 255, 0.2);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 1), 0 0 0 2px rgba(0,0,0,0.5);
+            transition: all 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+            z-index: 200;
+            color: white;
         }
 
+        .details-popup h4, .requirements-popup h4 {
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255,255,255,0.8);
+        }
+        
+        .details-popup p, .requirements-popup ul {
+            color: #eeeeee;
+        }
+
+        /* Positioning Logic */
+        .pop-container, .requirements-container { position: relative; z-index: auto; }
+        
         @media (max-width: 1023px) {
             .details-popup, .requirements-popup {
                 position: relative;
                 left: 0;
                 width: 100%;
-                margin-top: 1.5rem;
+                margin-top: 1rem;
                 display: block;
+                z-index: 200;
             }
             .is-active .details-popup, .is-active .requirements-popup {
                 opacity: 1;
@@ -142,59 +189,38 @@
         @media (min-width: 1024px) {
             .details-popup, .requirements-popup {
                 position: absolute;
-                bottom: 110%;
+                top: 50%;
                 left: 50%;
-                transform: translateX(-50%) translateY(15px);
-                width: 320px;
+                transform: translate(-50%, -50%) scale(0.9);
+                width: 340px;
                 pointer-events: none;
             }
             .pop-container:hover .details-popup,
             .requirements-container:hover .requirements-popup {
                 opacity: 1;
                 visibility: visible;
-                transform: translateX(-50%) translateY(0);
+                transform: translate(-50%, -50%) scale(1);
                 pointer-events: auto;
             }
         }
 
-        /* --- Password Modal --- */
-        #password-modal {
-            position: fixed;
-            inset: 0;
-            z-index: 200;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(20px);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-        }
-        #password-modal.active { display: flex; }
-
         /* --- Slider --- */
         #slider-container { position: fixed; inset: 0; z-index: 100; }
-        .slider-image { 
-            width: 100%; height: 100%; object-fit: cover; 
-            object-position: center 30%; 
-        }
+        .slider-image { width: 100%; height: 100%; object-fit: cover; object-position: center 30%; }
         @media (min-width: 1024px) { .slider-image { object-position: center 20%; } }
-        .slider-handle { 
-            position: absolute; top: 0; left: 50%; width: 80px; height: 100%; 
-            z-index: 20; transform: translateX(-50%); cursor: ew-resize;
-            display: flex; align-items: center; justify-content: center;
-            touch-action: none;
-        }
+        .slider-handle { position: absolute; top: 0; left: 50%; width: 80px; height: 100%; z-index: 20; transform: translateX(-50%); cursor: ew-resize; display: flex; align-items: center; justify-content: center; touch-action: none; }
         .slider-handle-line { width: 4px; height: 100%; background: white; box-shadow: 0 0 20px white; }
-        .page-content { display: none; opacity: 0; transition: opacity 1s ease; }
+        .page-content { display: none; opacity: 0; transition: opacity 1s ease; flex-grow: 1; }
         .page-content.active { display: block; opacity: 1; }
 
+        /* --- Utils --- */
         .badge {
-            background: rgba(167, 139, 250, 0.1);
-            color: #c4b5fd;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
             padding: 4px 12px;
             border-radius: 9999px;
             font-size: 0.75rem;
-            border: 1px solid rgba(167, 139, 250, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.3);
             display: inline-block;
             margin: 2px;
         }
@@ -211,27 +237,67 @@
         }
         .contact-btn:hover { transform: scale(1.1); background: rgba(255,255,255,0.1); border-color: white; z-index: 50; }
         .contact-btn svg { width: 24px; height: 24px; }
-
+        
         .service-img-placeholder {
             width: 100%; height: 140px; background: rgba(255, 255, 255, 0.03); border: 1px dashed rgba(255, 255, 255, 0.15); border-radius: 1rem; margin-bottom: 1.5rem; display: flex; align-items: center; justify-content: center; color: rgba(255, 255, 255, 0.2); font-size: 10px; text-transform: uppercase; font-weight: 700;
         }
-        .software-icon { width: 48px; height: 48px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(167, 139, 250, 0.5)); }
+        .software-icon { width: 48px; height: 48px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5)); }
+        
+        /* --- Intensified Text Glow --- */
+        h1, h2, h3, h4, h5, h6, p, span, li, a { transition: all 0.4s ease; }
+        h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover, 
+        p:hover, span:hover, li:hover, a:hover {
+            color: #ffffff;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 25px rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Footer & Password Modal Location --- */
+        footer { margin-top: auto; }
+
+        /* Modified Password Modal - Bottom Sheet Style */
+        #password-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: flex-end; /* Align to bottom */
+            justify-content: center;
+            padding-bottom: 3rem;
+            transition: opacity 0.3s ease;
+        }
+        #password-modal.active { display: flex; }
+        
+        /* Slide up animation for the card inside modal */
+        #password-modal .glass-card {
+            background: #000000;
+            border: 2px solid white;
+            box-shadow: 0 -20px 60px rgba(255, 255, 255, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 90%;
+            max-width: 400px;
+        }
+        #password-modal.active .glass-card {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="text-white">
 
     <div class="blur-overlay"></div>
 
-    <!-- Password Modal -->
+    <!-- Password Modal (Bottom Sheet) -->
     <div id="password-modal">
-        <div class="glass-card p-8 w-full max-w-sm text-center">
-            <h3 class="text-xl font-bold mb-6">Security Check</h3>
-            <p class="text-gray-400 text-sm mb-6">Enter password to unlock "About Me".<br><small id="attempt-count" class="text-violet-400 font-bold">2 attempts remaining</small></p>
-            <input type="password" id="pwd-input" class="w-full bg-white/5 border border-white/20 rounded-xl px-4 py-3 mb-6 focus:outline-none focus:border-violet-500 transition" placeholder="Password...">
-            <div id="pwd-error" class="text-red-500 text-xs mb-4 hidden">Incorrect password.</div>
+        <div class="glass-card p-8 text-center">
+            <h3 class="text-xl font-bold mb-6 text-white uppercase tracking-widest">Restricted Access</h3>
+            <p class="text-gray-300 text-sm mb-6">Enter password to view "About Me".<br><small id="attempt-count" class="text-white font-bold">2 attempts remaining</small></p>
+            <input type="password" id="pwd-input" class="w-full bg-white/10 border border-white/50 rounded-xl px-4 py-3 mb-6 focus:outline-none focus:border-white transition text-white placeholder-gray-500 text-center tracking-widest" placeholder="• • • • • • •">
+            <div id="pwd-error" class="text-red-400 text-xs mb-4 hidden font-bold">Incorrect password.</div>
             <div class="flex gap-3">
-                <button onclick="closeModal()" class="flex-1 py-3 bg-white/10 rounded-xl hover:bg-white/20 transition font-semibold">Cancel</button>
-                <button onclick="checkPassword()" class="flex-1 py-3 bg-violet-600 rounded-xl hover:bg-violet-500 transition font-bold shadow-lg">Unlock</button>
+                <button onclick="closeModal()" class="flex-1 py-3 bg-white/10 rounded-xl hover:bg-white/20 transition font-semibold text-xs uppercase">Cancel</button>
+                <button onclick="checkPassword()" class="flex-1 py-3 bg-white text-black rounded-xl hover:bg-gray-200 transition font-bold shadow-lg text-xs uppercase">Unlock</button>
             </div>
         </div>
     </div>
@@ -278,12 +344,23 @@
         </header>
 
         <main class="container mx-auto px-4 py-16 space-y-32 text-center">
-            <section id="about-prof">
-                <h2 class="text-4xl font-bold mb-8 italic text-white">About Me</h2>
-                <div class="glass-card p-8 md:p-12 max-w-4xl mx-auto">
-                    <p class="text-gray-300 text-lg leading-relaxed">
-                        Motivated Mechanical Engineering student with a strong technical base in CAD design, mechanical systems, Python and data analysis. Aspiring to work on innovative engineering and global technology projects while continuously improving technical and professional skills.
-                    </p>
+            
+            <!-- About Me with Black & White Skill Reveal -->
+            <section id="about-prof" class="py-16 md:py-32 overflow-visible">
+                <h2 class="text-4xl font-bold mb-12 italic text-white">About Me</h2>
+                
+                <div class="max-w-4xl mx-auto skill-reveal-container relative observe-focus">
+                    <!-- Technical Skill Bubbles (Pops to front, B&W) -->
+                    <div class="skill-bubble s1">CATIA V5</div>
+                    <div class="skill-bubble s2">SolidWorks</div>
+                    <div class="skill-bubble s3">GD&T</div>
+                    <div class="skill-bubble s4">Python</div>
+
+                    <div class="glass-card p-8 md:p-12 relative z-10 bg-black/40 border-white/10">
+                        <p class="text-gray-300 text-lg leading-relaxed">
+                            Motivated Mechanical Engineering student with a strong technical base in CAD design, mechanical systems, Python and data analysis. Aspiring to work on innovative engineering and global technology projects while continuously improving technical and professional skills.
+                        </p>
+                    </div>
                 </div>
             </section>
 
@@ -316,13 +393,14 @@
 
             <!-- PROJECTS -->
             <section id="projects-prof">
-                <h2 class="text-4xl font-bold mb-12 italic text-white">Projects</h2>
+                <h2 class="text-4xl font-bold mb-12 italic text-white">Engineering Projects</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto text-left">
-                    <!-- NEW PROJECT ADDED HERE -->
+                    
+                    <!-- Weed Detection -->
                     <div class="glass-card p-8 h-full flex flex-col observe-focus md:col-span-2 border-violet-500/20">
-                        <div class="flex flex-col md:flex-row justify-between items-start mb-4">
+                         <div class="flex flex-col md:flex-row justify-between items-start mb-4">
                             <h3 class="text-2xl font-bold text-white mb-2">Smart Weed Detection & Destroyer Machine</h3>
-                            <span class="text-violet-300 text-xs font-bold border border-violet-500/30 px-3 py-1 rounded-full">Final Year Project</span>
+                            <span class="text-white text-xs font-bold border border-white/30 px-3 py-1 rounded-full">Final Year Project</span>
                         </div>
                         <p class="text-gray-400 text-sm mb-4 italic">July 2025 - July 2026</p>
                         <ul class="text-gray-300 text-sm mb-6 space-y-2 list-disc pl-5">
@@ -337,34 +415,46 @@
                             <div class="flex gap-2">
                                 <span class="badge">Python</span>
                                 <span class="badge">SolidWorks</span>
-                                <span class="badge">Automation</span>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Existing Projects -->
-                    <div class="glass-card p-8 h-full flex flex-col observe-focus">
+                    <!-- Portfolio -->
+                    <div class="glass-card p-8 h-full flex flex-col observe-focus border-white/20">
                         <h3 class="text-xl font-bold text-violet-300 mb-2">Personal Portfolio Website</h3>
                         <p class="text-gray-300 text-sm mb-6 flex-grow leading-relaxed">Built during 1st and 2nd year of engineering. Focused on high-performance front-end technologies and interactive design logic.</p>
                         <div class="mt-auto"><span class="badge">Front-End</span><span class="badge">Three.js</span></div>
                     </div>
+
+                    <!-- Gear Reduction -->
                     <div class="glass-card p-8 h-full flex flex-col observe-focus">
                         <h3 class="text-xl font-bold text-white mb-2">2 Stage Gear Reduction</h3>
                         <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025 | DYPCOE, Akurdi</p>
                         <p class="text-gray-300 text-sm mb-6 flex-grow">SolidWorks modeling and analysis focusing on torque efficiency and CAD precision.</p>
                         <div class="mt-auto"><span class="badge">SOLIDWORKS</span></div>
                     </div>
+
+                    <!-- Transmission Box -->
                     <div class="glass-card p-8 h-full flex flex-col observe-focus">
                         <h3 class="text-xl font-bold text-white mb-2">5 Stage Transmission Gear Box</h3>
                         <p class="text-gray-400 text-sm mb-4 italic">Mar 2025 - May 2025 | DYPCOE, Akurdi</p>
                         <p class="text-gray-300 text-sm mb-6 flex-grow">Advanced surface modeling and multi-stage assembly validation within the CATIA ecosystem.</p>
                         <div class="mt-auto"><span class="badge">CATIA V5</span></div>
                     </div>
+
+                    <!-- Ramjet Engine -->
                     <div class="glass-card p-8 h-full flex flex-col observe-focus">
                         <h3 class="text-xl font-bold text-white mb-2">Design of Ramjet Engine</h3>
                         <p class="text-gray-400 text-sm mb-4 italic">Jan 2025 | Dwello Aerospace</p>
                         <p class="text-gray-300 text-sm mb-6 flex-grow">Conceptual aerodynamic flow research and propulsion modeling for high-velocity aircraft propulsion.</p>
                         <div class="mt-auto"><span class="badge">Autodesk Fusion 360</span><span class="badge">Aerodynamics</span></div>
+                    </div>
+                    
+                    <!-- General CAD Works -->
+                    <div class="glass-card p-8 h-full flex flex-col observe-focus">
+                        <h3 class="text-xl font-bold text-white mb-2">Technical CAD Practice</h3>
+                        <p class="text-gray-300 text-sm mb-6 flex-grow">A collection of practice models and interview designs showcasing proficiency in complex geometries.</p>
+                        <div class="mt-auto"><span class="badge">CAD</span><span class="badge">Practice</span></div>
                     </div>
                 </div>
             </section>
@@ -417,8 +507,8 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                     </a>
-                    <div class="contact-btn bg-indigo-500/80 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798zM9.037 15.389c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm5.926 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
+                    <div class="contact-btn bg-indigo-500/80 p-5 text-center">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
@@ -493,8 +583,10 @@
                             <div class="service-img-placeholder">Thumbnail</div>
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Thumbnail Design</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1k - ₹3k</p>
+                            
+                            <!-- POPUP NOW IN FRONT & BLACK/WHITE -->
                             <div class="details-popup text-left">
-                                <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
+                                <h4 class="font-bold mb-2 text-sm italic text-white border-b border-gray-600 pb-2">Technical Demands</h4>
                                 <p class="text-[11px] text-gray-300">1920x1080 | 300 PPI | High Contrast Grade | Optimized for Click Psychology.</p>
                             </div>
                         </div>
@@ -506,7 +598,7 @@
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Shorts Editing</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹1.5k - ₹5k</p>
                             <div class="details-popup text-left">
-                                <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
+                                <h4 class="font-bold mb-2 text-sm italic text-white border-b border-gray-600 pb-2">Technical Demands</h4>
                                 <p class="text-[11px] text-gray-300">Max 60s | Vertical 9:16 | Smooth 60 FPS Export | Dynamic Pacing & Sound FX.</p>
                             </div>
                         </div>
@@ -518,7 +610,7 @@
                             <h3 class="text-2xl font-bold mb-4 text-violet-300">Long Form Video</h3>
                             <p class="text-3xl font-bold text-white mb-6">₹2k - ₹10k</p>
                             <div class="details-popup text-left">
-                                <h4 class="text-violet-300 font-bold mb-2 text-sm italic">Technical Demands</h4>
+                                <h4 class="font-bold mb-2 text-sm italic text-white border-b border-gray-600 pb-2">Technical Demands</h4>
                                 <p class="text-[11px] text-gray-300">8-20+ Mins | 4K Master | Rough Cut to Final Grade | Narrative Storytelling flow.</p>
                             </div>
                         </div>
@@ -536,8 +628,9 @@
                         <a href="mailto:freelancervaibhav.work@gmail.com" class="text-lg md:text-3xl font-bold text-violet-300 hover:text-white transition-all block mb-6 text-center">freelancervaibhav.work@gmail.com</a>
                         <p class="text-[10px] text-gray-500 uppercase tracking-widest font-bold italic">Hover for Project Checklist</p>
                         
+                        <!-- REQUIREMENTS POPUP (BLACK & WHITE, IN FRONT) -->
                         <div class="requirements-popup text-left">
-                            <h4 class="text-violet-300 font-bold mb-4 border-b border-white/10 pb-2 italic text-lg text-center">Project Checklist</h4>
+                            <h4 class="font-bold mb-4 border-b border-gray-600 pb-2 italic text-lg text-center text-white">Project Checklist</h4>
                             <ul class="text-sm space-y-4 text-gray-300">
                                 <li><strong class="text-white">Brief:</strong> Clear script/story in Doc format.</li>
                                 <li><strong class="text-white">Media:</strong> Cloud links (Drive/Dropbox) to raw footage.</li>
@@ -564,8 +657,8 @@
                         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                     </a>
-                    <div class="contact-btn bg-indigo-500/80 text-center">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798zM9.037 15.389c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm5.926 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
+                    <div class="contact-btn bg-indigo-500/80 p-5 text-center">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
                         <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
                     </div>
                     <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
@@ -573,6 +666,8 @@
                         <span class="text-[10px] font-bold uppercase mt-1">Telegram</span>
                     </a>
                 </div>
+                <!-- About Me (With Password) -->
+                <button onclick="openModal()" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
             </section>
         </main>
     </div>
@@ -708,7 +803,7 @@
                     if (focused) document.body.classList.add('mobile-active-focus');
                     else document.body.classList.remove('mobile-active-focus');
                 }, { threshold: 0.6 });
-                document.querySelectorAll('.observe-focus, .pop-container, .requirements-container, .quote-container').forEach(item => observer.observe(item));
+                document.querySelectorAll('.observe-focus, .pop-container, .requirements-container, .quote-container, .skill-reveal-container').forEach(item => observer.observe(item));
             }
             setInteractionStyles(50);
         });
