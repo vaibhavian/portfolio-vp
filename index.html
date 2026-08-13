@@ -6,6 +6,7 @@
     <title>Vaibhav Prasad - Professional Portfolio 2026</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
     <style>
         html {
             scroll-behavior: smooth;
@@ -77,37 +78,50 @@
             }
         }
 
-        /* --- Skill Reveal Bubbles (Black & White Style) --- */
-        .skill-bubble {
+        /* --- Interactive Cursor Bubbles --- */
+        @keyframes float-organic {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-15px) rotate(2deg); }
+            66% { transform: translateY(10px) rotate(-2deg); }
+        }
+        
+        .bubble-wrapper {
             position: absolute;
-            padding: 12px 24px;
-            background: #000000;
-            border: 2px solid #ffffff;
-            border-radius: 9999px;
-            color: white;
-            font-weight: 700;
-            font-size: 0.9rem;
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 100;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
-            white-space: nowrap;
-            pointer-events: none;
+            transition: transform 0.15s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 50;
         }
 
-        .skill-reveal-container { position: relative; z-index: 50; }
-        .skill-reveal-container:hover .skill-bubble,
-        .skill-reveal-container.is-active .skill-bubble { opacity: 1; }
+        .interactive-bubble {
+            padding: 16px 32px;
+            background: #000000;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 2px solid #ffffff;
+            border-radius: 9999px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            white-space: nowrap;
+            animation: float-organic 6s ease-in-out infinite;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+        }
 
-        .s1 { top: 0; left: 0; transform: translate(50%, 50%); }
-        .s2 { top: 0; right: 0; transform: translate(-50%, 50%); }
-        .s3 { bottom: 0; left: 0; transform: translate(50%, -50%); }
-        .s4 { bottom: 0; right: 0; transform: translate(-50%, -50%); }
+        .interactive-bubble:hover {
+            background: #ffffff;
+            color: #000000;
+            box-shadow: 0 0 40px rgba(255,255,255,0.8);
+            transform: scale(1.1);
+        }
 
-        .skill-reveal-container:hover .s1, .skill-reveal-container.is-active .s1 { transform: translate(-30px, -40px) scale(1.1); }
-        .skill-reveal-container:hover .s2, .skill-reveal-container.is-active .s2 { transform: translate(30px, -40px) scale(1.1); }
-        .skill-reveal-container:hover .s3, .skill-reveal-container.is-active .s3 { transform: translate(-30px, 40px) scale(1.1); }
-        .skill-reveal-container:hover .s4, .skill-reveal-container.is-active .s4 { transform: translate(30px, 40px) scale(1.1); }
+        @media (max-width: 768px) {
+            .interactive-bubble {
+                padding: 12px 24px;
+                font-size: 0.75rem;
+            }
+        }
 
         /* --- Utils --- */
         .badge {
@@ -218,12 +232,21 @@
     <header class="bg-black/80 backdrop-blur-xl fixed top-0 w-full z-50 border-b border-white/5">
         <div class="container mx-auto flex justify-between items-center p-6">
             <a href="#" class="text-2xl font-bold tracking-tighter">Vaibhav Prasad</a>
-            <nav class="hidden lg:flex space-x-8 font-medium">
-                <a href="#about-prof" class="hover:text-violet-300 transition">About</a>
+            <nav class="hidden lg:flex items-center space-x-4 xl:space-x-6 font-medium">
+                <a href="#about-prof" class="hover:text-violet-300 transition">Skills</a>
                 <a href="#experience-prof" class="hover:text-violet-300 transition">Experience</a>
                 <a href="#projects-prof" class="hover:text-violet-300 transition">Projects</a>
                 <a href="#community-impact-prof" class="hover:text-violet-300 transition">Impact</a>
-                <a href="#contact-footer-prof" class="hover:text-violet-300 transition">Contact</a>
+                <a href="mailto:vaibhavjprasad@gmail.com" class="hover:text-violet-300 transition">Contact</a>
+                
+                <!-- Divider -->
+                <div class="w-px h-5 bg-white/20 mx-2"></div>
+                
+                <!-- CTA Buttons -->
+                <a href="#" class="hover:bg-violet-400 bg-violet-600 text-white transition flex items-center gap-1.5 px-4 py-2 rounded-full text-xs uppercase tracking-widest font-bold shadow-lg shadow-violet-500/20">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"></path></svg>
+                    Store / Buy Projects
+                </a>
             </nav>
         </div>
     </header>
@@ -241,12 +264,12 @@
                 </h1>
                 <h2 class="text-3xl md:text-5xl font-bold text-white mb-6">CAD Engineer.</h2>
                 <p class="text-lg md:text-xl text-gray-300 max-w-xl leading-relaxed mb-8">
-                    Full time Design Engineer & Final Year Mechanical Engineering Student<br>
+                    Full time Design Engineer<br>
                     <span class="text-sm md:text-base text-gray-400 mt-2 inline-block">Mechanical Systems · Hydraulic Equipment · AutoCAD · SolidWorks · CATIA V5 .</span>
                 </p>
                 <div class="flex gap-4">
-                     <a href="#projects-prof" class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition">View Projects</a>
-                     <a href="#contact-footer-prof" class="px-8 py-3 bg-white/10 text-white font-bold rounded-full hover:bg-white/20 transition backdrop-blur-md border border-white/20">Contact</a>
+                     <a href="#" class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition">Download my CV</a>
+                     <a href="mailto:vaibhavjprasad@gmail.com" class="px-8 py-3 bg-white/10 text-white font-bold rounded-full hover:bg-white/20 transition backdrop-blur-md border border-white/20">Contact</a>
                 </div>
             </div>
 
@@ -258,9 +281,9 @@
                     
                     <!-- The Image Container -->
                     <div class="relative w-full h-full rounded-full border-2 border-white/20 p-2 backdrop-blur-sm bg-white/5">
-                        <img src="https://raw.githubusercontent.com/vaibhavian/Portfolio-VAIBHAV/main/Gemini_Generated_Image_zrrz8zrrz8zrrz8z.png" 
+                        <img src="https://github.com/vaibhavian/portfolio-vp/blob/main/pro%20image%20.png?raw=true" 
                              alt="Vaibhav Prasad" 
-                             class="w-full h-full object-cover object-[center_35%] rounded-full border border-black/50 shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+                             class="w-full h-full object-cover object-[center_20%] rounded-full border border-black/50 shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
                         >
                     </div>
                     
@@ -275,21 +298,56 @@
     <!-- MAIN CONTENT -->
     <main class="container mx-auto px-4 py-16 space-y-32 text-center">
         
-        <!-- About Me with Black & White Skill Reveal -->
-        <section id="about-prof" class="py-16 md:py-32 overflow-visible">
-            <h2 class="text-4xl font-bold mb-12 italic text-white">About Me</h2>
+        <!-- Skills Section with Interactive Bubbles -->
+        <section id="about-prof" class="py-16 md:py-32 overflow-hidden">
+            <h2 class="text-4xl font-bold mb-12 italic text-white">Skills</h2>
             
-            <div class="max-w-4xl mx-auto skill-reveal-container relative observe-focus">
-                <!-- Technical Skill Bubbles (Pops to front, B&W) -->
-                <div class="skill-bubble s1">CATIA V5</div>
-                <div class="skill-bubble s2">SolidWorks</div>
-                <div class="skill-bubble s3">AutoCAD</div>
-                <div class="skill-bubble s4">Python</div>
-
-                <div class="glass-card p-8 md:p-12 relative z-10 bg-black/40 border-white/10">
-                    <p class="text-gray-300 text-lg leading-relaxed">
-                        Motivated Mechanical Engineering student with a strong technical base in CAD design, mechanical systems, Python and data analysis. Aspiring to work on innovative engineering and global technology projects while continuously improving technical and professional skills.
-                    </p>
+            <div id="skills-interactive-container" class="max-w-6xl mx-auto h-[400px] md:h-[500px] relative observe-focus flex items-center justify-center cursor-crosshair">
+                <p class="text-gray-500 uppercase tracking-[0.3em] font-bold text-xs md:text-sm absolute pointer-events-none text-center px-4">
+                    Hover around to interact
+                </p>
+                
+                <div class="bubble-wrapper" data-speed="-6" style="top: 15%; left: 8%;">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: 0s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Nut%20and%20bolt/3D/nut_and_bolt_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="SolidWorks">
+                         <span>SOLIDWORKS</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="5" style="bottom: 20%; left: 12%;">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -2s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Airplane/3D/airplane_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="CATIA">
+                         <span>CATIA</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="7" style="top: 25%; right: 10%;">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -4s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Triangular%20ruler/3D/triangular_ruler_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="AutoCAD">
+                         <span>AUTOCAD</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="-5" style="bottom: 15%; right: 12%;">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -1s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Light%20bulb/3D/light_bulb_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="Inventor">
+                         <span>INVENTOR</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="3" style="top: 45%; left: calc(50% - 110px);">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -3s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Droplet/3D/droplet_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="Hydraulics">
+                         <span>HYDRAULIC SYSTEMS</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="-4" style="bottom: 22%; left: calc(50% - 50px);">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -5s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Snake/3D/snake_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="Python">
+                         <span>PYTHON</span>
+                     </div>
+                </div>
+                <div class="bubble-wrapper" data-speed="4" style="top: 35%; right: 25%;">
+                     <div class="interactive-bubble flex items-center gap-3" style="animation-delay: -1.5s;">
+                         <img src="https://cdn.jsdelivr.net/gh/microsoft/fluentui-emoji@latest/assets/Bar%20chart/3D/bar_chart_3d.png" onerror="this.style.display='none'" class="w-7 h-7 md:w-8 md:h-8 drop-shadow-md" alt="Excel">
+                         <span>EXCEL</span>
+                     </div>
                 </div>
             </div>
         </section>
@@ -467,31 +525,39 @@
         <!-- CONTACT FOOTER -->
         <section id="contact-footer-prof" class="pt-20 border-t border-white/5">
             <h2 class="text-4xl font-bold mb-12 italic text-white">Connect With Me</h2>
-            <!-- Adjusted grid cols from 6 to 5 to fit remaining items evenly -->
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 max-w-6xl mx-auto px-4 mb-20">
-                <a href="mailto:vaibhvajprasad@gmail.com" class="contact-btn bg-red-500/80 p-5">
+            <div class="flex flex-wrap justify-center gap-4 max-w-6xl mx-auto px-4 mb-20">
+                <a href="mailto:vaibhavjprasad@gmail.com" class="contact-btn bg-red-700/80 p-5 w-[45%] sm:w-36">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
-                    <span class="text-[10px] font-bold uppercase mt-1">Gmail</span>
+                    <span class="text-[10px] font-bold uppercase mt-1 text-center">Pro Mail</span>
                 </a>
-                <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800 p-5">
+                <a href="mailto:vaibhavjprasad1474@gmail.com" class="contact-btn bg-red-500/80 p-5 w-[45%] sm:w-36">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+                    <span class="text-[10px] font-bold uppercase mt-1 text-center">Personal Mail</span>
+                </a>
+                <a href="https://x.com/AmIthatVaibhav" target="_blank" class="contact-btn bg-zinc-800 p-5 w-[45%] sm:w-36">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24h-6.617l-5.21-6.817-6.022 6.817h-3.308l7.732-8.835-8.31-10.67h6.772l4.643 6.257 5.49-6.257z"/></svg>
                     <span class="text-[10px] font-bold uppercase mt-1">X</span>
                 </a>
-                <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5">
+                <a href="https://www.linkedin.com/in/vaibhavprasad4431/" target="_blank" class="contact-btn bg-blue-700/80 p-5 w-[45%] sm:w-36">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     <span class="text-[10px] font-bold uppercase mt-1">LinkedIn</span>
                 </a>
-                <div class="contact-btn bg-indigo-500/80 p-5 text-center">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698c-0.826-0.475-1.725-0.825-2.659-1.055-0.243-0.038-0.488-0.057-0.734-0.057-0.431 0-0.858 0.065-1.274 0.19-0.018 0.006-1.182 0.329-2.31 0.823-3.37 1.459-1.057-0.636-2.188-1.13-3.37-1.459-0.018-0.006-0.037-0.01-0.055-0.016-0.416-0.125-0.843-0.19-1.274-0.19-0.246 0-0.49 0.019-0.734 0.057-0.078 0.013-0.156 0.024-0.232 0.044-0.934 0.23-1.833 0.58-2.659 1.055-0.254 0.146-0.495 0.31-0.725 0.488-1.52 1.187-2.646 2.87-3.235 4.798-0.164 1.492-0.1 3.015 0.18 4.503 0.31 1.65 0.943 3.217 1.84 4.634 0.81 1.03 1.78 1.91 2.86 2.65 0.71 0.33 1.45 0.61 2.22 0.82 0.59 0.16 1.19 0.29 1.8 0.38 0.69 0.1 1.39 0.15 2.09 0.15s1.4-0.05 2.09-0.15c0.61-0.09 1.21-0.22 1.8-0.38 0.71-0.21 1.45-0.49 2.22-0.82 1.08-0.74 2.05-1.62 2.86-2.65 0.897-1.417 1.53-2.984 1.84-4.634 0.28-1.488 0.344-3.01 0.18-4.503-0.589-1.928-1.715-3.611-3.235-4.798-0.23-0.178-0.471-0.342-0.725-0.488zm-5.28 11.02c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42zm-6.02 0c-0.78 0-1.42-0.64-1.42-1.42s0.64-1.42 1.42-1.42 1.42 0.64 1.42 1.42-0.64 1.42-1.42 1.42z"/></svg>
-                    <span class="text-[10px] font-bold uppercase mt-1">Discord</span>
-                </div>
-                <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80">
+                <!-- Official Discord blurple color & official icon path. Changed to a button to run script -->
+                <button onclick="copyDiscordId()" class="contact-btn bg-[#5865F2] hover:bg-[#4752C4] p-5 w-[45%] sm:w-36 cursor-pointer border-white/10 text-white shadow-lg transition-transform focus:outline-none">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg>
+                    <span id="discord-text" class="text-[10px] font-bold uppercase mt-1 transition-colors">Discord</span>
+                </button>
+                <a href="https://t.me/AmIThatV" target="_blank" class="contact-btn bg-sky-500/80 p-5 w-[45%] sm:w-36">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.14-.26.26-.54.26l.192-2.723 4.97-4.484c.216-.192-.048-.3-.33-.113L6.544 14.11l-2.643-.823c-.575-.18-.585-.575.12-.855l10.33-3.98c.478-.18.895.105.743.769z"/></svg>
                     <span class="text-[10px] font-bold uppercase mt-1">Telegram</span>
                 </a>
+                <a href="https://www.youtube.com/@Vaibhav_Pra_YT" target="_blank" class="contact-btn bg-red-600/90 p-5 w-[45%] sm:w-36">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    <span class="text-[10px] font-bold uppercase mt-1">YouTube</span>
+                </a>
             </div>
             <!-- About Me (With Password) -->
-            <button onclick="openModal()" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10">About Me</button>
+            <button onclick="openModal()" id="about-me-btn" class="inline-block mt-8 text-violet-300 hover:text-white transition font-bold uppercase tracking-widest text-xs border border-violet-500/30 px-6 py-2 rounded-full hover:bg-violet-500/10 mb-8">About Me</button>
         </section>
     </main>
 
@@ -569,10 +635,73 @@
                 }, { threshold: 0.6 });
                 document.querySelectorAll('.observe-focus, .glass-card, .skill-reveal-container').forEach(item => observer.observe(item));
             }
+
+            // Interactive Skill Bubbles Logic
+            const container = document.getElementById('skills-interactive-container');
+            const wrappers = document.querySelectorAll('.bubble-wrapper');
+
+            if (container && wrappers.length > 0) {
+                const handleMove = (clientX, clientY) => {
+                    const rect = container.getBoundingClientRect();
+                    const x = clientX - rect.left; 
+                    const y = clientY - rect.top;  
+                    
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    
+                    const moveX = (x - centerX);
+                    const moveY = (y - centerY);
+
+                    wrappers.forEach(wrapper => {
+                        const speed = parseFloat(wrapper.getAttribute('data-speed'));
+                        const xPos = (moveX * speed) / 60; 
+                        const yPos = (moveY * speed) / 60;
+                        
+                        wrapper.style.transform = `translate(${xPos}px, ${yPos}px)`;
+                    });
+                };
+
+                container.addEventListener('mousemove', (e) => handleMove(e.clientX, e.clientY));
+                container.addEventListener('touchmove', (e) => {
+                    if (e.touches.length > 0) {
+                        handleMove(e.touches[0].clientX, e.touches[0].clientY);
+                    }
+                }, { passive: true });
+                
+                const resetPositions = () => {
+                    wrappers.forEach(wrapper => {
+                        wrapper.style.transform = `translate(0px, 0px)`;
+                    });
+                };
+                
+                container.addEventListener('mouseleave', resetPositions);
+                container.addEventListener('touchend', resetPositions);
+            }
         });
 
         window.openModal = function() { document.getElementById('password-modal').classList.add('active'); document.getElementById('pwd-input').focus(); }
         window.closeModal = function() { document.getElementById('password-modal').classList.remove('active'); document.getElementById('pwd-input').value = ""; document.getElementById('pwd-error').classList.add('hidden'); }
+        
+        // --- COPY DISCORD ID LOGIC ---
+        window.copyDiscordId = function() {
+            const tempInput = document.createElement("input");
+            document.body.appendChild(tempInput);
+            tempInput.value = "mr.vaibhav.p";
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            
+            // Provide visual feedback indicating a copy action
+            const discordText = document.getElementById('discord-text');
+            const originalText = discordText.innerText;
+            discordText.innerText = "ID COPIED!";
+            discordText.classList.add("text-green-400");
+            
+            setTimeout(() => {
+                discordText.innerText = originalText;
+                discordText.classList.remove("text-green-400");
+            }, 2000); // Revert after 2 seconds
+        }
     </script>
 </body>
 </html>
